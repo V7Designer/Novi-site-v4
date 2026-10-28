@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vinícius Tavares | Sites para restaurantes e design gráfico</title>
+<meta name="description" content="Sites para restaurantes com pedido direto no WhatsApp, sem comissão de aplicativo, e design gráfico: capas de música, banners, logos e posts.">
+<meta name="theme-color" content="#0F1B3D">
+<meta property="og:title" content="Vinícius Tavares: sites para restaurantes e design gráfico">
+<meta property="og:description" content="Receba pedidos direto no WhatsApp com um site para o seu restaurante, ou peça artes que chamam atenção no feed.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23FFC21A'/%3E%3Cpath d='M7 9h18l-9 15z' fill='%236A3DF0'/%3E%3C/svg%3E">
+<link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+
+<style>
+/* ---------- Fontes (hospedadas no próprio site) ---------- */
+@font-face { font-family: "Bricolage"; src: url("/fonts/bricolage.woff2") format("woff2"); font-weight: 200 800; font-stretch: 75% 100%; font-display: swap; }
+@font-face { font-family: "Plex Mono"; src: url("/fonts/plexmono-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Plex Mono"; src: url("/fonts/plexmono-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Plex Mono"; src: url("/fonts/plexmono-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+
+/* ---------- Tokens ---------- */
+:root {
+  /* Área de restaurantes */
+  --mostarda: #FFC21A;
+  --mostarda-claro: #FFF4D6;
+  --nanquim: #0F1B3D;
+  --nanquim-2: #1C2D5E;
+  --papel: #F4F3EF;
+  --pimenta: #C0301B;
+  --manjericao: #17703F;
+  --texto-suave: #4A5370;
+  /* Área de design */
+  --violeta: #6A3DF0;
+  --noite: #0E0A1F;
+  --lilas: #EFEAFF;
+  --coral: #FF6A55;
+  --lilas-texto: #CFC6FF;
+  /* Área neutra (sobre mim e contato) */
+  --fundo: #FBFAF6;
+
+  --display: "Bricolage", "Helvetica Neue", Arial, sans-serif;
+  --mono: "Plex Mono", ui-monospace, "Courier New", monospace;
+
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --header-h: 64px;
+  --focus: var(--nanquim);
+
+  /* Cores do cabeçalho: mudam conforme a área que está na tela */
+  --h-bg: var(--nanquim);
+  --h-fg: var(--papel);
+  --h-line: var(--nanquim);
+  --h-btn-bg: var(--mostarda);
+  --h-btn-fg: var(--nanquim);
+}
+body[data-world="food"]   { --h-bg: var(--mostarda); --h-fg: var(--nanquim); --h-line: var(--nanquim); --h-btn-bg: var(--nanquim); --h-btn-fg: var(--papel); }
+body[data-world="design"] { --h-bg: var(--violeta); --h-fg: #fff; --h-line: var(--noite); --h-btn-bg: #fff; --h-btn-fg: var(--noite); }
+body[data-world="me"]     { --h-bg: var(--nanquim); --h-fg: var(--papel); --h-line: var(--nanquim); --h-btn-bg: var(--mostarda); --h-btn-fg: var(--nanquim); }
+@media (max-width: 860px) { :root { --header-h: 106px; } }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { font-family: var(--display); font-size: 1.0625rem; line-height: 1.6; color: var(--nanquim); background: var(--fundo); overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+ul { list-style: none; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.ico { width: 1.2em; height: 1.2em; flex: none; fill: currentColor; }
+.ico--line { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+.wrap { width: min(1180px, 100% - 2 * var(--gutter)); margin-inline: auto; }
+
+/* ---------- Tipografia ---------- */
+.h2 { font-size: clamp(2rem, 4.4vw, 3.5rem); font-weight: 800; font-stretch: 82%; line-height: 1.02; letter-spacing: -0.02em; text-wrap: balance; }
+.h3 { font-size: 1.35rem; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; }
+.lead { font-size: clamp(1.1rem, 1.6vw, 1.3rem); line-height: 1.55; max-width: 38em; }
+.muted { color: var(--texto-suave); }
+
+/* ---------- Botões ---------- */
+.btn { display: inline-flex; align-items: center; gap: .6rem; padding: .95rem 1.5rem; border-radius: 8px; border: 2px solid var(--nanquim); background: transparent; font-weight: 700; font-size: 1rem; text-decoration: none; cursor: pointer; transition: transform .15s ease, background-color .15s ease, color .15s ease; line-height: 1.2; }
+.btn:hover { transform: translateY(-2px); }
+.btn--solid { background: var(--nanquim); color: var(--papel); }
+.btn--solid:hover { background: var(--nanquim-2); }
+.btn--line:hover { background: var(--nanquim); color: var(--papel); }
+.btn--sun { background: var(--mostarda); border-color: var(--mostarda); color: var(--nanquim); }
+.btn--sun:hover { background: #ffd04d; border-color: #ffd04d; }
+.btn--white { background: #fff; border-color: #fff; color: var(--noite); }
+.btn--white:hover { background: var(--lilas); border-color: var(--lilas); }
+.btn--violet { background: var(--violeta); border-color: var(--violeta); color: #fff; }
+.btn--violet:hover { background: #7d54f5; border-color: #7d54f5; }
+.btn--coral { background: var(--coral); border-color: var(--coral); color: var(--noite); }
+.btn--coral:hover { background: #ff8171; border-color: #ff8171; }
+.btn--small { padding: .6rem 1rem; font-size: .95rem; }
+.btn[disabled] { opacity: .6; cursor: wait; transform: none; }
+
+/* ---------- Faixa de promoção (vem do painel admin) ---------- */
+.promo { background: var(--nanquim); color: var(--papel); text-decoration: none; display: block; font-size: .95rem; }
+.promo[hidden] { display: none; }
+.promo__in { display: flex; flex-wrap: wrap; gap: .4rem .9rem; align-items: center; justify-content: center; padding: .6rem 0; text-align: center; }
+.promo__tag { padding: .1rem .6rem; border-radius: 4px; font-weight: 700; font-size: .85rem; }
+.promo strong { color: var(--mostarda); }
+.promo:hover .promo__go { text-decoration: underline; }
+
+/* ---------- Cabeçalho (muda de cor com a área) ---------- */
+.top { position: sticky; top: 0; z-index: 50; background: var(--h-bg); color: var(--h-fg); border-bottom: 2px solid var(--h-line); --focus: var(--h-fg);
+  transition: background-color .5s ease, color .5s ease, border-color .5s ease; }
+.top__in { min-height: var(--header-h); display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.5rem; }
+.logo { font-size: 1.6rem; font-weight: 800; font-stretch: 80%; letter-spacing: -0.03em; text-decoration: none; }
+.logo span { font-weight: 300; }
+.tabs { display: flex; gap: clamp(1.25rem, 3vw, 2.5rem); justify-content: center; }
+.tabs a { text-decoration: none; font-weight: 700; padding: .3rem 0; border-bottom: 3px solid transparent; transition: border-color .3s ease; }
+.tabs a:hover { border-bottom-color: color-mix(in srgb, currentColor 45%, transparent); }
+.tabs a[aria-current="true"] { border-bottom-color: currentColor; }
+.top .btn { background: var(--h-btn-bg); border-color: var(--h-btn-bg); color: var(--h-btn-fg); transition: transform .15s ease, background-color .5s ease, color .5s ease, border-color .5s ease; }
+@media (max-width: 860px) {
+  .top__in { grid-template-columns: 1fr auto; grid-template-areas: "logo cta" "tabs tabs"; gap: .15rem 1rem; padding: .6rem 0 .45rem; }
+  .logo { grid-area: logo; }
+  .top .btn { grid-area: cta; }
+  .tabs { grid-area: tabs; justify-content: space-between; font-size: .95rem; }
+}
+
+/* ---------- Áreas ---------- */
+.world { scroll-margin-top: var(--header-h); }
+.sec { padding: clamp(4rem, 9vw, 7.5rem) 0; position: relative; }
+.sec__head { max-width: 40rem; margin-bottom: clamp(2rem, 5vw, 3.5rem); }
+.sec__head p { margin-top: 1rem; }
+.sec--navy { background: var(--nanquim); color: var(--papel); --focus: var(--mostarda); }
+.sec--navy .muted { color: #B9C2DE; }
+.sec--pale { background: var(--mostarda-claro); }
+.sec--sun { background: var(--mostarda); }
+.sec--violet { background: var(--violeta); color: #fff; --focus: #fff; }
+.sec--night { background: var(--noite); color: #F3F0FF; --focus: var(--coral); }
+.sec--night .muted { color: var(--lilas-texto); }
+.sec--lilac { background: var(--lilas); color: var(--noite); --focus: var(--violeta); }
+.sec--lilac .muted { color: #4B4470; }
+.sec--plain { background: var(--fundo); }
+
+/* Borda de "papel rasgado" na entrada da área de design */
+.torn::before { content: ""; position: absolute; left: 0; right: 0; top: -17px; height: 18px; background: inherit;
+  -webkit-mask: conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) 50% / 18px 100%;
+          mask: conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) 50% / 18px 100%; }
+
+/* ---------- Hero dividido ---------- */
+.hero { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100svh - var(--header-h)); }
+.panel { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 2rem; padding-block: clamp(2.5rem, 5vw, 4.5rem) clamp(2.5rem, 5vw, 4rem); }
+.panel--food { background: var(--mostarda); color: var(--nanquim); padding-left: max(var(--gutter), calc((100vw - 1180px) / 2)); padding-right: clamp(1.5rem, 4vw, 3.5rem); --focus: var(--nanquim); }
+.panel--design { background: var(--violeta); color: #fff; padding-right: max(var(--gutter), calc((100vw - 1180px) / 2)); padding-left: clamp(1.5rem, 4vw, 3.5rem); --focus: #fff; }
+.panel__title { font-size: clamp(2rem, 3.8vw, 3.6rem); font-weight: 800; font-stretch: 78%; line-height: 1; letter-spacing: -0.025em; text-wrap: balance; max-width: 15em; }
+.panel__lead { margin-top: 1.1rem; font-size: 1.1rem; max-width: 30em; }
+.panel__cta { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.25rem; margin-top: 1.6rem; }
+.panel__note { font-size: .95rem; }
+.panel__visual { margin-top: auto; padding-top: 1rem; }
+
+/* O pedido impresso (lado dos restaurantes) */
+.printer { position: relative; width: min(100%, 320px); padding-top: 22px; }
+.printer__slot { position: absolute; top: 0; left: -6px; right: -6px; height: 22px; background: var(--nanquim); border-radius: 10px; z-index: 3; box-shadow: 0 6px 0 rgba(15,27,61,.18); }
+.printer__slot::after { content: ""; position: absolute; left: 10px; right: 10px; bottom: 5px; height: 5px; background: #050a1c; border-radius: 3px; }
+.printer__clip { overflow: hidden; padding: 0 10px 28px; margin: 0 -10px; }
+.ticket-wrap { filter: drop-shadow(0 12px 0 rgba(15,27,61,.16)); transform: rotate(1.4deg); transform-origin: top center; }
+.ticket { background: var(--papel); padding: 1.3rem 1.15rem 2.4rem; font-family: var(--mono); font-size: .78rem; line-height: 1.5; color: var(--nanquim);
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 16px 100%;
+          mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 16px 100%;
+  animation: feed 2.6s steps(26, end) .35s both; }
+@keyframes feed { from { transform: translateY(-101%); } to { transform: translateY(0); } }
+.ticket__head { text-align: center; font-weight: 700; font-size: .88rem; }
+.ticket__head small { display: block; font-weight: 400; font-size: .74rem; }
+.ticket hr, .receipt hr { border: 0; border-top: 2px dashed rgba(15,27,61,.35); margin: .7rem 0; }
+.line { display: flex; gap: .75rem; justify-content: space-between; }
+.line > :last-child { white-space: nowrap; text-align: right; }
+.line--loss { color: var(--pimenta); }
+.line--gain { color: var(--manjericao); font-weight: 700; }
+.line--loss s { text-decoration-thickness: 2px; }
+.ticket__total { font-size: 1rem; font-weight: 700; }
+.ticket__sub { margin-top: .75rem; font-weight: 700; }
+
+/* A colagem de trabalhos (lado do design) */
+.collage { position: relative; width: min(100%, 540px); aspect-ratio: 16 / 9.5; margin-bottom: 1.5rem; }
+.collage img { position: absolute; height: auto; border: 3px solid var(--noite); border-radius: 6px; box-shadow: 7px 7px 0 var(--noite); background: var(--noite); }
+.collage__a { left: 0; top: 4%; width: 58%; transform: rotate(-3deg); }
+.collage__b { right: 0; top: 0; width: 34%; transform: rotate(3deg); }
+.collage__c { left: 36%; bottom: -8%; width: 30%; transform: rotate(-1.5deg); z-index: 2; }
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; min-height: 0; }
+  .panel--food, .panel--design { padding-inline: var(--gutter); }
+  .panel__visual { display: none; }
+  .panel { gap: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .ticket { animation: none; }
+  .btn, .top, .top .btn, .tabs a { transition: none; }
+}
+
+/* ---------- Calculadora ---------- */
+.calc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+.calc__form { display: grid; gap: 1.75rem; margin-top: 2.25rem; max-width: 30rem; }
+.field label { display: flex; justify-content: space-between; gap: 1rem; font-weight: 600; margin-bottom: .55rem; }
+.field output { color: var(--mostarda); font-weight: 800; font-variant-numeric: tabular-nums; }
+.money { display: flex; align-items: center; background: rgba(255,255,255,.08); border: 2px solid rgba(244,243,239,.4); border-radius: 8px; padding: 0 1rem; }
+.money:focus-within { border-color: var(--mostarda); }
+.money span { font-weight: 700; margin-right: .5rem; color: var(--mostarda); }
+.money input { width: 100%; background: transparent; border: 0; padding: .85rem 0; font-size: 1.35rem; font-weight: 700; font-variant-numeric: tabular-nums; outline: none; -moz-appearance: textfield; }
+.money input::-webkit-outer-spin-button, .money input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+input[type=range] { width: 100%; accent-color: var(--mostarda); height: 1.6rem; cursor: pointer; }
+
+.receipt { background: var(--papel); color: var(--nanquim); font-family: var(--mono); font-size: .875rem; padding: 1.75rem 1.5rem 2.75rem; position: relative;
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 16px 100%;
+          mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 16px 100%; }
+.receipt-wrap { filter: drop-shadow(0 12px 0 rgba(0,0,0,.28)); }
+.receipt__title { font-weight: 700; text-align: center; font-size: 1rem; }
+.receipt .line { padding: .2rem 0; }
+.receipt__big { font-family: var(--display); font-weight: 800; font-stretch: 80%; font-size: clamp(2.6rem, 6vw, 3.6rem); line-height: 1; color: var(--manjericao); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.receipt__big small { font-family: var(--mono); font-size: .85rem; font-weight: 500; letter-spacing: 0; color: var(--nanquim); }
+.receipt__cta { margin-top: 1.25rem; display: flex; }
+.receipt__cta .btn { width: 100%; justify-content: center; }
+.receipt__note { margin-top: .9rem; font-size: .78rem; color: var(--texto-suave); font-family: var(--display); }
+@media (max-width: 880px) { .calc { grid-template-columns: 1fr; } }
+
+/* ---------- Projetos de restaurante ---------- */
+.projects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.25rem, 3vw, 2rem); }
+.proj { display: flex; flex-direction: column; text-decoration: none; background: #fff; border: 2px solid var(--nanquim); border-radius: 10px; overflow: hidden; transition: transform .2s ease, box-shadow .2s ease; }
+a.proj:hover { transform: translateY(-4px); box-shadow: 0 8px 0 var(--nanquim); }
+.proj--feature { grid-column: span 2; }
+.proj__bar { display: flex; align-items: center; gap: .4rem; padding: .55rem .8rem; background: var(--papel); border-bottom: 2px solid var(--nanquim); font-family: var(--mono); font-size: .75rem; min-width: 0; }
+.proj__bar i { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--nanquim); flex: none; }
+.proj__bar span { margin-left: .5rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.proj__shot { aspect-ratio: 16 / 10; background: var(--nanquim-2); overflow: hidden; display: grid; place-items: center; color: var(--mostarda); font-size: 4rem; font-weight: 800; }
+.proj--feature .proj__shot { aspect-ratio: 16 / 8; }
+.proj__shot img { width: 100%; height: 100%; object-fit: cover; }
+.proj__body { padding: 1.25rem 1.35rem 1.5rem; display: flex; flex-direction: column; gap: .5rem; flex: 1; }
+.proj__body p { color: var(--texto-suave); font-size: .98rem; }
+.proj__go { margin-top: auto; padding-top: .5rem; font-weight: 700; display: inline-flex; align-items: center; gap: .35rem; }
+a.proj:hover .proj__go { text-decoration: underline; text-underline-offset: 3px; }
+.projects__empty { grid-column: 1 / -1; color: var(--texto-suave); }
+@media (max-width: 980px) { .projects { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .projects { grid-template-columns: 1fr; } .proj--feature { grid-column: auto; } .proj--feature .proj__shot { aspect-ratio: 16 / 10; } }
+
+/* ---------- Planos ---------- */
+.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.25rem, 3vw, 2rem); align-items: stretch; }
+.plan { background: #fff; border: 2px solid var(--nanquim); border-radius: 10px; padding: 2rem 1.75rem; display: flex; flex-direction: column; gap: 1.1rem; position: relative; }
+.plan--main { background: var(--nanquim); color: var(--papel); --focus: var(--mostarda); }
+.plan__flag { position: absolute; top: -.95rem; left: 1.5rem; background: var(--mostarda); color: var(--nanquim); font-weight: 700; font-size: .9rem; padding: .2rem .8rem; border-radius: 6px; border: 2px solid var(--nanquim); }
+.plan__tag { color: var(--texto-suave); font-size: .98rem; }
+.plan--main .plan__tag { color: #B9C2DE; }
+.plan__price { font-size: clamp(2.5rem, 4.5vw, 3.4rem); font-weight: 800; font-stretch: 80%; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+.plan__price small { font-size: 1.1rem; font-weight: 600; letter-spacing: 0; margin-right: .3rem; }
+.plan__list { display: grid; gap: .6rem; padding-top: 1.1rem; border-top: 2px dashed currentColor; margin-top: .25rem; flex: 1; align-content: start; }
+.plan__list li { display: flex; gap: .65rem; align-items: flex-start; font-size: .98rem; line-height: 1.4; }
+.plan__list .ico { width: 1.15em; height: 1.15em; margin-top: .12em; color: var(--manjericao); }
+.plan--main .plan__list .ico { color: var(--mostarda); }
+.plan .btn { justify-content: center; }
+.plan--main .btn { background: var(--mostarda); border-color: var(--mostarda); color: var(--nanquim); }
+.plan--main .btn:hover { background: #ffd04d; border-color: #ffd04d; }
+@media (max-width: 980px) { .plans { grid-template-columns: 1fr; max-width: 34rem; } }
+
+/* ---------- Dúvidas ---------- */
+.faq { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(2rem, 6vw, 5rem); align-items: start; }
+.faq details { border-bottom: 2px solid var(--nanquim); }
+.faq details:first-child { border-top: 2px solid var(--nanquim); }
+.faq summary { list-style: none; cursor: pointer; padding: 1.2rem 0; font-weight: 700; font-size: 1.15rem; display: flex; justify-content: space-between; gap: 1rem; align-items: center; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-size: 1.8rem; line-height: 1; font-weight: 400; flex: none; }
+.faq details[open] summary::after { content: "–"; }
+.faq details p { padding: 0 2.5rem 1.4rem 0; color: var(--texto-suave); max-width: 36rem; }
+@media (max-width: 880px) { .faq { grid-template-columns: 1fr; } }
+
+/* ---------- Design: serviços ---------- */
+.dsvc { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(2rem, 6vw, 5rem); align-items: start; }
+.dsvc .lead { margin-top: 1.1rem; }
+.dsvc__cta { margin-top: 2rem; }
+.svc-list li { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 1rem 1.5rem; padding: 1.2rem 0; border-top: 2px solid rgba(255,255,255,.45); }
+.svc-list li:last-child { border-bottom: 2px solid rgba(255,255,255,.45); }
+.svc-list strong { font-size: 1.2rem; line-height: 1.25; letter-spacing: -0.01em; }
+.svc-list span { color: rgba(255,255,255,.9); }
+@media (max-width: 880px) { .dsvc { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .svc-list li { grid-template-columns: 1fr; gap: .3rem; } }
+
+/* ---------- Design: galeria ---------- */
+.gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 2.4vw, 1.75rem); align-items: start; }
+.gallery__col { display: grid; gap: clamp(1rem, 2.4vw, 1.75rem); align-content: start; }
+.work { display: block; width: 100%; text-align: left; background: none; border: 0; cursor: zoom-in; }
+.work__img { display: block; border: 2px solid rgba(255,255,255,.22); border-radius: 8px; overflow: hidden; background: #000; transition: transform .2s ease, border-color .2s ease; }
+.work__img img { width: 100%; height: auto; }
+.work:hover .work__img { transform: translateY(-4px); border-color: var(--coral); }
+.work__cap { display: block; margin-top: .6rem; line-height: 1.35; }
+.work__cap strong { display: block; font-size: 1.05rem; }
+.work__cap span { color: var(--lilas-texto); font-size: .92rem; }
+.work__cap .work__price { display: block; margin-top: .25rem; color: #fff; font-weight: 700; font-size: 1rem; }
+.work__price s { color: var(--lilas-texto); font-weight: 400; margin-right: .35rem; }
+.work__price i { font-style: normal; background: var(--coral); color: var(--noite); border-radius: 5px; padding: .05rem .45rem; font-size: .75rem; margin-left: .35rem; letter-spacing: .02em; text-transform: uppercase; }
+.lightbox__buy { display: flex; flex-direction: column; align-items: center; gap: .7rem; margin-top: .4rem; }
+.lightbox__buy .work__price { margin: 0; }
+.plan__old { margin: 0 0 -.2rem; font-size: .95rem; opacity: .8; }
+.plan__old s { margin-right: .4rem; }
+.plan--main .plan__old b { background: var(--mostarda); color: var(--nanquim); }
+.plan__old b { background: var(--nanquim); color: #fff; border-radius: 5px; padding: .05rem .5rem; font-size: .75rem; text-transform: uppercase; letter-spacing: .02em; }
+@media (max-width: 900px) { .gallery { display: block; columns: 2; column-gap: 1.25rem; } .gallery__col { display: contents; } .work { break-inside: avoid; margin-bottom: 1.25rem; } }
+@media (max-width: 560px) { .gallery { columns: 1; } }
+
+.lightbox { border: 0; background: transparent; max-width: min(94vw, 1100px); max-height: 94vh; padding: 0; color: #fff; overflow: visible; margin: auto; }
+.lightbox::backdrop { background: rgba(14,10,31,.9); }
+.lightbox img { max-width: 100%; max-height: 80vh; width: auto; height: auto; margin-inline: auto; border-radius: 8px; border: 2px solid rgba(255,255,255,.3); }
+.lightbox p { margin-top: .8rem; text-align: center; }
+.lightbox__x { position: absolute; right: 0; top: -3rem; width: 2.6rem; height: 2.6rem; border-radius: 8px; border: 2px solid #fff; background: transparent; color: #fff; font-size: 1.6rem; line-height: 1; cursor: pointer; }
+.lightbox__x:hover { background: #fff; color: var(--noite); }
+
+/* ---------- Design: pedido ---------- */
+.order { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(2rem, 6vw, 5rem); align-items: center; }
+.chips { border: 0; display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.75rem 0 2rem; }
+.chips label { cursor: pointer; }
+.chips input { position: absolute; opacity: 0; pointer-events: none; }
+.chips span { display: inline-block; padding: .65rem 1.1rem; border: 2px solid var(--noite); border-radius: 8px; font-weight: 600; transition: background-color .15s ease, color .15s ease; }
+.chips label:hover span { background: #fff; }
+.chips input:checked + span { background: var(--noite); color: #fff; }
+.chips input:focus-visible + span { outline: 3px solid var(--violeta); outline-offset: 3px; }
+@media (max-width: 880px) { .order { grid-template-columns: 1fr; } }
+
+/* ---------- Sobre mim ---------- */
+.about { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(2rem, 6vw, 5rem); align-items: center; }
+.about p + p { margin-top: 1rem; }
+.about .btn { margin-top: 1.75rem; }
+.duo { position: relative; height: 300px; max-width: 420px; width: 100%; margin-inline: auto; }
+.duo__a, .duo__b { position: absolute; display: flex; align-items: flex-end; padding: 1.1rem 1.3rem; font-size: 1.9rem; font-weight: 800; font-stretch: 78%; letter-spacing: -0.02em; border: 2px solid var(--nanquim); }
+.duo__a { left: 0; top: 0; width: 66%; height: 70%; background: var(--mostarda); color: var(--nanquim); transform: rotate(-3deg); padding-bottom: 2.4rem;
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 16px 100%; mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 16px 100%; border: 0; }
+.duo__b { right: 0; bottom: 0; width: 62%; height: 62%; background: var(--violeta); color: #fff; border-radius: 8px; border-color: var(--noite); transform: rotate(3deg); box-shadow: 6px 6px 0 var(--noite); }
+@media (max-width: 880px) { .about { grid-template-columns: 1fr; } .duo { height: 240px; } .duo--photo { height: auto; } }
+.duo--photo { height: auto; }
+.about__photo { width: 100%; max-height: 440px; object-fit: cover; border: 2px solid var(--nanquim); border-radius: 10px; box-shadow: 8px 8px 0 var(--mostarda); background: var(--papel); }
+
+/* ---------- Contato ---------- */
+.contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 6vw, 5rem); align-items: start; }
+.contact__direct { margin-top: 2rem; display: grid; gap: .5rem; font-weight: 600; }
+.contact__direct a { text-underline-offset: 3px; }
+.form { background: var(--papel); color: var(--nanquim); border: 2px solid var(--mostarda); border-radius: 10px; padding: clamp(1.4rem, 3vw, 2.2rem); display: grid; gap: 1.1rem; --focus: var(--nanquim); }
+.form label { display: block; font-weight: 600; font-size: .95rem; margin-bottom: .35rem; }
+.form input, .form select, .form textarea { width: 100%; padding: .8rem .9rem; background: #fff; border: 2px solid var(--nanquim); border-radius: 8px; font-size: 1rem; }
+.form textarea { resize: vertical; min-height: 7rem; }
+.form input:focus, .form select:focus, .form textarea:focus { outline: 3px solid var(--mostarda); outline-offset: 0; }
+.form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+.form__status { font-weight: 600; min-height: 1.5em; }
+.form__status.is-ok { color: var(--manjericao); }
+.form__status.is-err { color: var(--pimenta); }
+.form .btn { justify-content: center; }
+.form .btn--solid { background: var(--nanquim); color: var(--papel); border-color: var(--nanquim); }
+@media (max-width: 880px) { .contact { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .form__row { grid-template-columns: 1fr; } }
+
+/* ---------- Outros canais (Instagram e Discord) ---------- */
+.btn--light { border-color: var(--papel); color: var(--papel); }
+.btn--light:hover { background: var(--papel); color: var(--nanquim); }
+.btn-row { display: flex; flex-wrap: wrap; gap: .75rem; }
+.copy { background: none; border: 0; border-bottom: 2px dashed currentColor; cursor: pointer; font-weight: 600; padding: 0; line-height: 1.3; }
+.copy__hint { font-weight: 400; opacity: .8; margin-left: .45rem; font-size: .9em; }
+.alt { margin-top: 1.5rem; font-size: .98rem; max-width: 30rem; }
+.alt a { font-weight: 600; text-underline-offset: 3px; }
+
+/* ---------- Rodapé ---------- */
+.foot { background: var(--nanquim); color: var(--papel); padding: 0 0 2rem; --focus: var(--mostarda); }
+.foot__grid { display: flex; flex-wrap: wrap; gap: 2rem 4rem; justify-content: space-between; align-items: flex-start; padding-top: 2.5rem; border-top: 2px dashed rgba(244,243,239,.25); }
+.foot__links { display: flex; gap: 1.1rem; margin-top: 1rem; }
+.foot__links a { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border: 2px solid rgba(244,243,239,.4); border-radius: 8px; transition: background-color .15s ease, color .15s ease; }
+.foot__links a:hover { background: var(--mostarda); color: var(--nanquim); border-color: var(--mostarda); }
+.foot p { color: #B9C2DE; }
+.foot strong { color: var(--papel); }
+.foot__extra { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: .4rem 1.1rem; }
+.foot__extra[hidden] { display: none; }
+.foot__extra a { color: var(--papel); text-underline-offset: 3px; }
+.foot__copy { margin-top: 2rem; font-size: .9rem; }
+</style>
+</head>
+
+<body data-world="hero">
+
+<!-- Ícones reutilizados -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M20.5 3.5A11.8 11.8 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.6 4.2 1.6 6L0 24l6.3-1.7a11.9 11.9 0 0 0 5.7 1.5c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.200-3.400-8.400zM12 21.800c-1.800 0-3.600-.5-5.100-1.400l-.4-.2-3.700 1 1-3.600-.2-.4a9.900 9.900 0 0 1-1.500-5.200c0-5.500 4.500-9.900 9.900-9.900 2.700 0 5.100 1 7 2.900a9.800 9.800 0 0 1 2.900 7c0 5.500-4.400 9.800-9.900 9.800zm5.400-7.400c-.3-.1-1.800-.9-2-1-.3-.1-.5-.1-.7.1l-1 1.200c-.2.200-.4.200-.7.100-1.800-.9-2.900-1.600-4.100-3.600-.3-.5.300-.5.900-1.600.1-.2 0-.4 0-.5l-.9-2.200c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.400-.3.300-1 1-1 2.500s1.100 2.900 1.200 3.100c.1.200 2.100 3.200 5.100 4.500 1.900.8 2.600.9 3.500.7.600-.1 1.800-.7 2-1.400.3-.7.3-1.300.2-1.400-.1-.1-.3-.2-.6-.3z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9"/></symbol>
+  <symbol id="i-out" viewBox="0 0 20 20"><path d="M6 14L14 6M7 6h7v7"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+</svg>
+
+<!-- Faixa de promoção: só aparece quando existe uma promoção ativa no painel admin -->
+<a class="promo" id="promo" hidden target="_blank" rel="noopener"></a>
+
+<header class="top">
+  <div class="wrap top__in">
+    <a class="logo" href="#topo" aria-label="vini.dev, início">vini<span>.dev</span></a>
+    <nav class="tabs" aria-label="Áreas do site">
+      <a href="#restaurantes" data-world="food">Restaurantes</a>
+      <a href="#design" data-world="design">Design</a>
+      <a href="#sobre" data-world="me">Sobre mim</a>
+    </nav>
+    <a class="btn btn--small" data-wa="Olá Vinícius! Vi seu site e quero fazer um orçamento." href="https://wa.me/5583988655944" target="_blank" rel="noopener">
+      <svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg> WhatsApp
+    </a>
+  </div>
+</header>
+
+<main id="topo">
+
+  <!-- ===== Início: os dois nichos lado a lado ===== -->
+  <div class="world" data-world="hero">
+    <h1 class="sr-only">Vinícius Tavares: sites para restaurantes e design gráfico</h1>
+    <section class="hero" aria-label="Os dois serviços">
+
+      <div class="panel panel--food">
+        <div>
+          <h2 class="panel__title" data-bind="hero_food_title">Receba pedidos direto no WhatsApp. Sem comissão de aplicativo.</h2>
+          <p class="panel__lead" data-bind="hero_food_lead">Sites para restaurantes com cardápio digital, carrinho e um painel para você mesmo atualizar.</p>
+          <div class="panel__cta">
+            <a class="btn btn--solid" href="#restaurantes">Ver sites para restaurantes</a>
+            <span class="panel__note">Planos a partir de R$ <span data-bind="preco-min">1.497</span>.</span>
+          </div>
+        </div>
+        <div class="panel__visual">
+          <div class="printer" role="group" aria-label="Exemplo de um pedido recebido pelo WhatsApp">
+            <div class="printer__slot" aria-hidden="true"></div>
+            <div class="printer__clip">
+              <div class="ticket-wrap">
+                <div class="ticket">
+                  <div class="ticket__head">Restaurante Exemplo<small>Pedido #0042, via WhatsApp</small></div>
+                  <hr>
+                  <div class="line"><span>2x X-Burguer artesanal</span><span>R$ 56,00</span></div>
+                  <div class="line"><span>1x Batata média</span><span>R$ 18,00</span></div>
+                  <div class="line"><span>1x Suco de caju</span><span>R$ 9,00</span></div>
+                  <hr>
+                  <div class="line ticket__total"><span>Total do pedido</span><span>R$ 83,00</span></div>
+                  <div class="ticket__sub">Se fosse pelo aplicativo</div>
+                  <div class="line line--loss"><span>Comissão de 20%</span><span><s>−R$ 16,60</s></span></div>
+                  <div class="ticket__sub">Pelo seu site</div>
+                  <div class="line line--gain"><span>Comissão</span><span>R$ 0,00</span></div>
+                  <hr>
+                  <div class="line ticket__total"><span>Você recebe</span><span>R$ 83,00</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel--design">
+        <div>
+          <h2 class="panel__title" data-bind="hero_design_title">Artes que chamam atenção no feed.</h2>
+          <p class="panel__lead" data-bind="hero_design_lead">Capas de música, banners de loja, logos e posts feitos para o seu projeto.</p>
+          <div class="panel__cta">
+            <a class="btn btn--white" href="#design">Ver meus designs</a>
+            <span class="panel__note" id="design-note">Orçamento direto no WhatsApp.</span>
+          </div>
+        </div>
+        <div class="panel__visual">
+          <div class="collage" aria-hidden="true">
+            <img class="collage__a" src="/img/god-of-war.webp" alt="" width="1280" height="720">
+            <img class="collage__b" src="/img/astros-gbrx.webp" alt="" width="900" height="900">
+            <img class="collage__c" src="/img/021-richard.webp" alt="" width="1050" height="1300">
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <!-- ===== Área de restaurantes (mostarda) ===== -->
+  <div class="world" id="restaurantes" data-world="food">
+
+    <section class="sec sec--navy" id="calculadora">
+      <div class="wrap calc">
+        <div>
+          <h2 class="h2">Veja quanto o aplicativo leva do seu mês</h2>
+          <p class="lead muted" style="margin-top:1rem">Coloque o seu movimento. A conta é feita aqui, na hora, e você vê quanto sobra para o caixa se parte dos pedidos vier direto pelo seu site.</p>
+
+          <form class="calc__form" id="calc" onsubmit="return false">
+            <div class="field">
+              <label for="c-fat">Quanto você vende por mês nos aplicativos?</label>
+              <div class="money"><span>R$</span><input id="c-fat" type="number" inputmode="numeric" min="0" max="10000000" step="100" value="15000"></div>
+            </div>
+            <div class="field">
+              <label for="c-com">Comissão que o aplicativo cobra <output id="o-com" for="c-com">20%</output></label>
+              <input id="c-com" type="range" min="5" max="35" step="1" value="20">
+            </div>
+            <div class="field">
+              <label for="c-mig">Pedidos que você traz para o site <output id="o-mig" for="c-mig">25%</output></label>
+              <input id="c-mig" type="range" min="5" max="80" step="5" value="25">
+              <p class="muted" style="margin-top:.5rem;font-size:.9rem">Comece com um número baixo. Os clientes que já conhecem o seu restaurante são os mais fáceis de trazer.</p>
+            </div>
+          </form>
+        </div>
+
+        <div class="receipt-wrap">
+          <div class="receipt">
+            <div class="receipt__title">Extrato do mês</div>
+            <hr>
+            <div class="line"><span>Vendas nos aplicativos</span><span id="r-fat">R$ 15.000</span></div>
+            <div class="line line--loss"><span>Comissão que você paga hoje</span><span id="r-com">−R$ 3.000</span></div>
+            <div class="line"><span>Pedidos que passam a vir direto (<span id="r-mig">25%</span>)</span><span id="r-direto">R$ 3.750</span></div>
+            <hr>
+            <div>Comissão que você deixa de pagar</div>
+            <div class="receipt__big" aria-live="polite" aria-atomic="true"><span id="r-eco">R$ 750</span> <small>por mês</small></div>
+            <hr>
+            <div class="line"><span>Em 12 meses</span><span id="r-ano"><strong>R$ 9.000</strong></span></div>
+            <div class="line"><span>Plano Delivery Pro (R$ <span data-bind="preco-delivery">2.497</span>) se paga em</span><span id="r-pay"><strong>3,3 meses</strong></span></div>
+            <div class="receipt__cta">
+              <a class="btn btn--solid" id="calc-wa" href="https://wa.me/5583988655944" target="_blank" rel="noopener">Quero economizar isso</a>
+            </div>
+            <p class="receipt__note">Estimativa feita com os números que você informou. O resultado real depende do seu aplicativo e do seu movimento.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec sec--pale" id="sites">
+      <div class="wrap">
+        <div class="sec__head">
+          <h2 class="h2">Sites que já fiz. Abra e teste.</h2>
+          <p class="lead muted">Cada um está no ar, funcionando. Entre pelo celular, como o seu cliente faria.</p>
+        </div>
+        <div class="projects" id="projects" aria-live="polite">
+          <p class="projects__empty">Carregando os sites…</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec sec--sun" id="planos">
+      <div class="wrap">
+        <div class="sec__head">
+          <h2 class="h2">Três pacotes. Escolha o que cabe no seu restaurante.</h2>
+        </div>
+        <div class="plans">
+
+          <article class="plan">
+            <h3 class="h3">Essencial</h3>
+            <p class="plan__tag">Para sair do aplicativo e ser encontrado.</p>
+            <p class="plan__old" data-old="essencial" hidden></p>
+            <p class="plan__price"><small>R$</small><span data-bind="preco-essencial">1.497</span></p>
+            <ul class="plan__list">
+              <li><svg class="ico ico--line" aria-hidden="true"><use href="#i-check"/></svg>Site que abre bem no celular</li>
+              <li><svg class="ico ico--line" aria-hidden="true"><use href="#i-check"/></svg>Cardápio digital</li>
+              <li><svg class="ico ico--line" aria-hidden="true"><use href="#i-check"/></svg>Botão de WhatsApp</li>
+              <li><svg class="ico ico--line" aria-hidden="true"><use href="#i-check"/></svg>Mapa do Google com a sua localização</li>
+              <li><svg class="ico ico--line" aria-hidden="true"><use href="#i-check"/></svg>Formulário de contato</li>
+            </ul>
+            <a class="btn btn--line" data-wa="Olá Vinícius! Quero o plano ESSENCIAL para o meu restaurante." href="https://wa.me/5583988655944" target="_blank" rel="noopener">Pedir o Essencial</a>
+          </article>
+
+          <article class="plan plan--main">
+            <span class="plan__flag">Recomendado</span>
+            <h3 class="h3">Delivery Pro</h3>
+            <p class="plan__tag">Para receber pedido direto, sem taxa.</p>
+            <p class="plan__old" data-old="delivery" hidden></p>
+            <p class="plan__price"><small>R$</small><span data-bind="preco-delivery">2.497</span></p>
+            <ul class="plan__list">
+              <li><svg class="ico ico--line" aria-hidden="true"><use href="#i-check"/></svg>Tudo do Essencial</li>
+              <li><svg class="ico ico--line" aria-hidden="true"><use href="#i-check"/></svg>Carrinho de compras que envia o pedido pronto para o seu WhatsApp</li>
+              <li><svg class="ico ico--line" aria-hidden="true"><use href="#i-check"/></svg>Reservas online</li>
+              <li><svg class="ico ico--line" aria-hidden="true"><use href="#i-check"/></svg>Painel administrativo para você mesmo atualizar</li>
+              <li><svg class="ico ico--line" aria-hidden="true"><use href="#i-check"/></svg>Galeria de fotos</li>
+            </ul>
+            <a class="btn" data-wa="Olá Vinícius! Quero o plano DELIVERY PRO para o meu restaurante." href="https://wa.me/5583988655944" target="_blank" rel="noopener">Pedir o Delivery Pro</a>
+          </article>
+
+          <article class="plan">
+            <h3 class="h3">Premium</h3>
+            <p class="plan__tag">Para aparecer no Google e fazer o cliente voltar.</p>
+            <p class="plan__old" data-old="premium" hidden></p>
+            <p class="plan__price"><small>R$</small><span data-bind="preco-premium">3.497</span></p>
+            <ul class="plan__list">
+              <li><svg class="ico ico--line" aria-hidden="true"><use href="#i-check"/></svg>Tudo do Delivery Pro</li>
+              <li><svg class="ico ico--line" aria-hidden="true"><use href="#i-check"/></svg>SEO local para aparecer melhor nas buscas da sua cidade</li>
+              <li><svg class="ico ico--line" aria-hidden="true"><use href="#i-check"/></svg>Integração com o Google</li>
+              <li><svg class="ico ico--line" aria-hidden="true"><use href="#i-check"/></svg>Programa de fidelidade</li>
+              <li><svg class="ico ico--line" aria-hidden="true"><use href="#i-check"/></svg>6 meses de suporte</li>
+            </ul>
+            <a class="btn btn--line" data-wa="Olá Vinícius! Quero o plano PREMIUM para o meu restaurante." href="https://wa.me/5583988655944" target="_blank" rel="noopener">Pedir o Premium</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="sec sec--pale" id="duvidas">
+      <div class="wrap faq">
+        <h2 class="h2">Dúvidas de quem tem restaurante</h2>
+        <div>
+          <details>
+            <summary>O site cobra comissão por pedido?</summary>
+            <p>Não. Os pedidos chegam direto no seu WhatsApp, sem aplicativo no meio, e o site não cobra nada por pedido recebido.</p>
+          </details>
+          <details>
+            <summary>Preciso saber mexer em site para atualizar o cardápio?</summary>
+            <p>Não. Os planos Delivery Pro e Premium incluem um painel administrativo feito para você usar sem saber programar.</p>
+          </details>
+          <details>
+            <summary>O site funciona bem no celular?</summary>
+            <p>Sim. Todos os planos têm site responsivo, feito para abrir bem no celular do seu cliente, que é de onde vem a maioria dos pedidos de delivery.</p>
+          </details>
+          <details>
+            <summary>Como peço um orçamento?</summary>
+            <p>Chame no WhatsApp ou preencha o formulário no fim da página. Eu respondo direto, e você me conta sobre o seu restaurante.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== Área de design (violeta) ===== -->
+  <div class="world" id="design" data-world="design">
+
+    <section class="sec sec--violet torn" id="servicos-design">
+      <div class="wrap dsvc">
+        <div>
+          <h2 class="h2">Artes que chamam atenção no feed</h2>
+          <p class="lead">Cada arte é pensada para o seu projeto: a ideia, as cores e o estilo vêm de uma conversa direta comigo.</p>
+          <p class="dsvc__cta"><a class="btn btn--white" href="#pedir-arte">Pedir minha arte</a></p>
+        </div>
+        <ul class="svc-list">
+          <li><strong>Capas e artes de música</strong><span>Divulgação de single, show ou álbum para artistas.</span></li>
+          <li><strong>Banners para lojas e comunidades</strong><span>Banner de Discord, ícone e arte de divulgação.</span></li>
+          <li><strong>Logos e avatares</strong><span>Marca para o seu projeto, com versões para datas especiais.</span></li>
+          <li><strong>Wallpapers e montagens</strong><span>Composições em alta resolução com personagens e cenários.</span></li>
+          <li><strong>Artes para redes sociais</strong><span>Posts e capas com o mesmo estilo em todo o perfil.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="sec sec--night" id="trabalhos">
+      <div class="wrap">
+        <div class="sec__head">
+          <h2 class="h2">Alguns trabalhos meus</h2>
+          <p class="lead muted">Toque em uma arte para ver maior.</p>
+        </div>
+
+        <!-- Para adicionar um trabalho novo: copie um bloco <button class="work"> e troque a imagem, o título e o tipo. -->
+        <div class="gallery">
+          <div class="gallery__col">
+            <button class="work" type="button" data-title="GTA V" data-price="40" data-type="Wallpaper de jogo">
+              <span class="work__img"><img src="/img/gta-v.webp" alt="Wallpaper com três personagens de GTA V sobre um fundo escuro de morro com casas" width="1280" height="720" loading="lazy"></span>
+              <span class="work__cap"><strong>GTA V</strong><span>Wallpaper de jogo</span><span class="work__price">A partir de R$ 40</span></span>
+            </button>
+            <button class="work" type="button" data-title="Moon Hosting" data-price="80" data-type="Logo e avatar de Natal">
+              <span class="work__img"><img src="/img/moon-hosting.webp" alt="Logo Moon Hosting com gorro de Natal sobre fundo de enfeites natalinos" width="900" height="900" loading="lazy"></span>
+              <span class="work__cap"><strong>Moon Hosting</strong><span>Logo e avatar de Natal</span><span class="work__price">A partir de R$ 80</span></span>
+            </button>
+          </div>
+          <div class="gallery__col">
+            <button class="work" type="button" data-title="021 Richard" data-price="60" data-type="Arte de divulgação de música">
+              <span class="work__img"><img src="/img/021-richard.webp" alt="Arte de divulgação do artista 021 Richard, com o título Melhor do Trap e os ícones do Spotify, YouTube e Deezer" width="1050" height="1300" loading="lazy"></span>
+              <span class="work__cap"><strong>021 Richard</strong><span>Arte de divulgação de música</span><span class="work__price">A partir de R$ 60</span></span>
+            </button>
+            <button class="work" type="button" data-title="LEOD Store" data-price="50" data-type="Banner para loja de Discord">
+              <span class="work__img"><img src="/img/leod-store.webp" alt="Banner da LEOD Store, loja de Discord, em tons de verde-água com foguete e carrinho de compras" width="1020" height="265" loading="lazy"></span>
+              <span class="work__cap"><strong>LEOD Store</strong><span>Banner para loja de Discord</span><span class="work__price">A partir de R$ 50</span></span>
+            </button>
+          </div>
+          <div class="gallery__col">
+            <button class="work" type="button" data-title="God of War" data-price="40" data-type="Wallpaper de jogo">
+              <span class="work__img"><img src="/img/god-of-war.webp" alt="Wallpaper de God of War com três versões do Kratos em tons de vermelho e preto" width="1280" height="720" loading="lazy"></span>
+              <span class="work__cap"><strong>God of War</strong><span>Wallpaper de jogo</span><span class="work__price">A partir de R$ 40</span></span>
+            </button>
+            <button class="work" type="button" data-title="Os Astros do GBRX" data-price="35" data-type="Arte para rede social">
+              <span class="work__img"><img src="/img/astros-gbrx.webp" alt="Arte Os Astros do GBRX com o Thor cercado de raios em tons de azul" width="900" height="900" loading="lazy"></span>
+              <span class="work__cap"><strong>Os Astros do GBRX</strong><span>Arte para rede social</span><span class="work__price">A partir de R$ 35</span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec sec--lilac" id="pedir-arte">
+      <div class="wrap order">
+        <div>
+          <h2 class="h2">Peça a sua arte</h2>
+          <p class="lead muted" style="margin-top:1rem">Escolha o tipo e me chame no WhatsApp. Conte a ideia, as cores e as referências que você gosta.</p>
+        </div>
+        <div>
+          <fieldset class="chips" id="chips">
+            <legend class="sr-only">Que tipo de arte você quer?</legend>
+            <label><input type="radio" name="tipo" value="uma capa ou arte de música" checked><span>Capa de música</span></label>
+            <label><input type="radio" name="tipo" value="um banner para a minha loja ou comunidade"><span>Banner de loja</span></label>
+            <label><input type="radio" name="tipo" value="um logo ou avatar"><span>Logo ou avatar</span></label>
+            <label><input type="radio" name="tipo" value="um post para rede social"><span>Post para rede social</span></label>
+            <label><input type="radio" name="tipo" value="uma arte que ainda vou explicar"><span>Outra ideia</span></label>
+          </fieldset>
+          <a class="btn btn--violet" id="order-wa" href="https://wa.me/5583988655944" target="_blank" rel="noopener">
+            <svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg> Pedir no WhatsApp
+          </a>
+          <p class="alt">Prefere outro canal? Me chame no <a href="https://www.instagram.com/vini.wdev/" data-ig target="_blank" rel="noopener">Instagram <span data-bind="ig-handle">@vini.wdev</span></a> ou adicione no Discord:
+            <button type="button" class="copy" data-copy="anonymbtw" aria-label="Copiar usuário do Discord: anonymbtw"><span data-bind="discord">anonymbtw</span><span class="copy__hint" aria-live="polite">copiar</span></button></p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== Sobre mim e contato ===== -->
+  <div class="world" id="sobre" data-world="me">
+    <section class="sec sec--plain">
+      <div class="wrap about">
+        <div>
+          <h2 class="h2">Sobre mim</h2>
+          <p class="lead" style="margin-top:1.25rem" data-bind="about_p1">Sou Vinícius Tavares, desenvolvedor fullstack e designer. Faço sites para restaurantes que querem vender direto pelo WhatsApp e artes para músicos, lojas e criadores que querem se destacar.</p>
+          <p class="muted" data-bind="about_p2">Cada trabalho é feito sob medida, e você fala direto comigo pelo WhatsApp, sem agência no meio.</p>
+          <a class="btn btn--solid" data-wa="Olá Vinícius! Quero conversar sobre um trabalho." href="https://wa.me/5583988655944" target="_blank" rel="noopener">Falar com o Vinícius</a>
+        </div>
+        <div class="duo" aria-hidden="true">
+          <div class="duo__a">Sites</div>
+          <div class="duo__b">Design</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec sec--navy" id="contato">
+      <div class="wrap contact">
+        <div>
+          <h2 class="h2">Peça seu orçamento</h2>
+          <p class="lead" style="margin-top:1rem">O jeito mais rápido é o WhatsApp. Se preferir, deixe seus dados no formulário e eu chamo você.</p>
+          <div class="btn-row" style="margin-top:1.75rem">
+            <a class="btn btn--sun" data-wa="Olá Vinícius! Vi seu site e quero fazer um orçamento." href="https://wa.me/5583988655944" target="_blank" rel="noopener">
+              <svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg> Chamar no WhatsApp
+            </a>
+            <a class="btn btn--light" href="https://www.instagram.com/vini.wdev/" data-ig target="_blank" rel="noopener">
+              <svg class="ico ico--line" style="stroke-width:2" aria-hidden="true"><use href="#i-ig"/></svg> Chamar no Instagram
+            </a>
+          </div>
+          <div class="contact__direct">
+            <a href="tel:+5583988655944" data-tel><span data-bind="wa-display">(83) 98865-5944</span></a>
+            <a href="mailto:vini-dev@zohomail.com" data-mail><span data-bind="email">vini-dev@zohomail.com</span></a>
+            <a href="https://www.instagram.com/vini.wdev/" data-ig target="_blank" rel="noopener"><span data-bind="ig-handle">@vini.wdev</span> no Instagram</a>
+            <span>Discord: <button type="button" class="copy" data-copy="anonymbtw" aria-label="Copiar usuário do Discord: anonymbtw"><span data-bind="discord">anonymbtw</span><span class="copy__hint" aria-live="polite">copiar</span></button></span>
+          </div>
+        </div>
+
+        <form class="form" id="contact-form" novalidate>
+          <div>
+            <label for="nome">Seu nome</label>
+            <input type="text" id="nome" name="nome" autocomplete="name" required maxlength="120">
+          </div>
+          <div class="form__row">
+            <div>
+              <label for="telefone">WhatsApp</label>
+              <input type="tel" id="telefone" name="telefone" autocomplete="tel" inputmode="tel" required maxlength="30" placeholder="(83) 90000-0000">
+            </div>
+            <div>
+              <label for="email">E-mail</label>
+              <input type="email" id="email" name="email" autocomplete="email" required maxlength="160">
+            </div>
+          </div>
+          <div>
+            <label for="interesse">O que você precisa?</label>
+            <select id="interesse" name="interesse">
+              <optgroup label="Site para restaurante">
+                <option value="Site para restaurante (ainda não sei o plano)">Ainda não sei qual plano</option>
+                <option id="opt-ess" value="Site: plano Essencial (R$ 1.497)">Essencial (R$ 1.497)</option>
+                <option id="opt-del" value="Site: plano Delivery Pro (R$ 2.497)">Delivery Pro (R$ 2.497)</option>
+                <option id="opt-pre" value="Site: plano Premium (R$ 3.497)">Premium (R$ 3.497)</option>
+              </optgroup>
+              <optgroup label="Design">
+                <option value="Design: capa ou arte de música">Capa ou arte de música</option>
+                <option value="Design: banner de loja ou comunidade">Banner de loja ou comunidade</option>
+                <option value="Design: logo ou avatar">Logo ou avatar</option>
+                <option value="Design: post para rede social">Post para rede social</option>
+                <option value="Design: outra ideia">Outra ideia de design</option>
+              </optgroup>
+            </select>
+          </div>
+          <div>
+            <label for="mensagem">Conte o que você tem em mente</label>
+            <textarea id="mensagem" name="mensagem" required maxlength="2000" placeholder="Nome do seu restaurante ou projeto e o que você mais precisa."></textarea>
+          </div>
+          <button type="submit" class="btn btn--solid" id="send">Enviar mensagem</button>
+          <p class="form__status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <a class="logo" href="#topo">vini<span>.dev</span></a>
+        <p style="margin-top:.5rem">Sites para restaurantes e design gráfico, por Vinícius Tavares.</p>
+        <div class="foot__links">
+          <a href="https://wa.me/5583988655944" data-wa="" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg></a>
+          <a href="https://www.instagram.com/vini.wdev/" data-ig target="_blank" rel="noopener" aria-label="Instagram"><svg class="ico ico--line" style="stroke-width:2" aria-hidden="true"><use href="#i-ig"/></svg></a>
+          <a href="mailto:vini-dev@zohomail.com" data-mail aria-label="E-mail"><svg class="ico ico--line" style="stroke-width:2" aria-hidden="true"><use href="#i-mail"/></svg></a>
+        </div>
+        <p class="foot__extra" id="foot-extra" hidden></p>
+      </div>
+      <div>
+        <p><strong>WhatsApp</strong><br><span data-bind="wa-display">(83) 98865-5944</span></p>
+        <p style="margin-top:.8rem"><strong>E-mail</strong><br><span data-bind="email">vini-dev@zohomail.com</span></p>
+        <p style="margin-top:.8rem"><strong>Discord</strong><br><span data-bind="discord">anonymbtw</span></p>
+      </div>
+    </div>
+    <p class="foot__copy">© 2026 Vinícius Tavares</p>
+  </div>
+</footer>
+
+<!-- Ver trabalho ampliado -->
+<dialog class="lightbox" id="lightbox" aria-label="Trabalho ampliado">
+  <form method="dialog"><button class="lightbox__x" aria-label="Fechar">×</button></form>
+  <img id="lb-img" src="" alt="">
+  <p id="lb-cap"></p>
+  <div class="lightbox__buy" id="lb-buy-box" hidden>
+    <span class="work__price" id="lb-price"></span>
+    <a class="btn btn--white" id="lb-buy" href="#" target="_blank" rel="noopener">Quero uma arte assim</a>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  'use strict';
+
+  var WA = '5583988655944';
+  var DELIVERY_PRO = 2497;
+  var brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+  var dec1 = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  function $(id) { return document.getElementById(id); }
+  function waLink(text) { return 'https://wa.me/' + WA + (text ? '?text=' + encodeURIComponent(text) : ''); }
+
+  // Todo link com data-wa abre o WhatsApp já com a mensagem escrita
+  function wireWa() { document.querySelectorAll('[data-wa]').forEach(function (a) { a.href = waLink(a.getAttribute('data-wa')); }); }
+  wireWa();
+
+  /* ---------- Contatos, redes e preços (editáveis no painel admin) ---------- */
+  function fmtPreco(v) { return new Intl.NumberFormat('pt-BR').format(parseInt(v, 10) || 0); }
+  function bind(name, text) { document.querySelectorAll('[data-bind="' + name + '"]').forEach(function (n) { n.textContent = text; }); }
+  function applyConfig(c) {
+    WA = c.whatsapp;
+    wireWa();
+    bind('wa-display', c.whatsapp_exibicao);
+    document.querySelectorAll('[data-tel]').forEach(function (a) { a.href = 'tel:+' + c.whatsapp; });
+    bind('email', c.email);
+    document.querySelectorAll('[data-mail]').forEach(function (a) { a.href = 'mailto:' + c.email; });
+    bind('ig-handle', '@' + c.instagram);
+    document.querySelectorAll('[data-ig]').forEach(function (a) { a.href = 'https://www.instagram.com/' + c.instagram + '/'; });
+    bind('discord', c.discord);
+    document.querySelectorAll('.copy').forEach(function (b) {
+      b.setAttribute('data-copy', c.discord);
+      b.setAttribute('aria-label', 'Copiar usuário do Discord: ' + c.discord);
+    });
+
+    var ess0 = parseInt(c.preco_essencial, 10), del0 = parseInt(c.preco_delivery, 10), pre0 = parseInt(c.preco_premium, 10);
+    // Oferta do painel: só vale se for menor que o preço normal (o servidor já tira as vencidas)
+    function efetivo(normal, oferta) { var o = parseInt(oferta, 10); return o > 0 && o < normal ? o : normal; }
+    var ess = efetivo(ess0, c.oferta_essencial), del = efetivo(del0, c.oferta_delivery), pre = efetivo(pre0, c.oferta_premium);
+    bind('preco-essencial', fmtPreco(ess)); bind('preco-delivery', fmtPreco(del)); bind('preco-premium', fmtPreco(pre));
+    [['essencial', ess0, ess], ['delivery', del0, del], ['premium', pre0, pre]].forEach(function (p) {
+      var o = document.querySelector('[data-old="' + p[0] + '"]');
+      if (!o) return;
+      o.textContent = '';
+      if (p[2] < p[1]) {
+        o.appendChild(el('s', null, 'De R$ ' + fmtPreco(p[1])));
+        var tag = c.oferta_planos_ate ? 'Oferta até ' + new Date(c.oferta_planos_ate).toLocaleDateString('pt-BR') : 'Oferta';
+        o.appendChild(el('b', null, tag));
+        o.hidden = false;
+      } else { o.hidden = true; }
+    });
+    var validos = [ess, del, pre].filter(function (n) { return n > 0; });
+    if (validos.length) bind('preco-min', fmtPreco(Math.min.apply(null, validos)));
+    if (del > 0) DELIVERY_PRO = del;
+    [['opt-ess', 'Site: plano Essencial', 'Essencial', ess], ['opt-del', 'Site: plano Delivery Pro', 'Delivery Pro', del], ['opt-pre', 'Site: plano Premium', 'Premium', pre]].forEach(function (o) {
+      var op = $(o[0]); if (!op) return;
+      op.value = o[1] + ' (R$ ' + fmtPreco(o[3]) + ')';
+      op.textContent = o[2] + ' (R$ ' + fmtPreco(o[3]) + ')';
+    });
+
+    var extra = $('foot-extra');
+    extra.textContent = '';
+    [['YouTube', c.youtube], ['TikTok', c.tiktok], ['Behance', c.behance]].forEach(function (r) {
+      var href = r[1] && safeUrl(r[1]);
+      if (!href) return;
+      var a = el('a', null, r[0]);
+      a.href = href; a.target = '_blank'; a.rel = 'noopener';
+      extra.appendChild(a);
+    });
+    extra.hidden = !extra.childNodes.length;
+
+    ['hero_food_title', 'hero_food_lead', 'hero_design_title', 'hero_design_lead', 'about_p1', 'about_p2'].forEach(function (k) { if (c[k]) bind(k, c[k]); });
+
+    var duo = document.querySelector('.duo'), foto = c.sobre_foto && safeUrl(c.sobre_foto);
+    if (duo && foto) {
+      var photo = duo.querySelector('.about__photo');
+      if (!photo) {
+        duo.textContent = ''; duo.removeAttribute('aria-hidden'); duo.className = 'duo duo--photo';
+        photo = document.createElement('img'); photo.className = 'about__photo'; photo.alt = 'Foto de Vinícius Tavares';
+        duo.appendChild(photo);
+      }
+      photo.src = foto;
+    }
+
+    calc();
+    orderLink();
+  }
+  fetch('/api/config')
+    .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+    .then(applyConfig)
+    .catch(function () {});
+
+  /* ---------- Cor do cabeçalho muda conforme a área que está na tela ---------- */
+  var tabs = document.querySelectorAll('.tabs a');
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
+  var THEME = { hero: '#0F1B3D', food: '#FFC21A', design: '#6A3DF0', me: '#0F1B3D' };
+  function setWorld(w) {
+    if (document.body.dataset.world === w) return;
+    document.body.dataset.world = w;
+    tabs.forEach(function (a) {
+      if (a.dataset.world === w) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+    if (themeMeta) themeMeta.setAttribute('content', THEME[w] || THEME.hero);
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) setWorld(e.target.dataset.world); });
+    }, { rootMargin: '-12% 0px -84% 0px' });
+    document.querySelectorAll('.world').forEach(function (w) { io.observe(w); });
+  }
+
+  /* ---------- Calculadora ---------- */
+  var elFat = $('c-fat'), elCom = $('c-com'), elMig = $('c-mig');
+
+  function calc() {
+    var fat = Math.max(0, Math.min(10000000, parseFloat(elFat.value) || 0));
+    var com = parseInt(elCom.value, 10) / 100;
+    var mig = parseInt(elMig.value, 10) / 100;
+
+    var pagoHoje = fat * com;
+    var direto = fat * mig;
+    var economia = direto * com;
+
+    $('o-com').textContent = Math.round(com * 100) + '%';
+    $('o-mig').textContent = Math.round(mig * 100) + '%';
+    $('r-fat').textContent = brl.format(fat);
+    $('r-com').textContent = '−' + brl.format(pagoHoje);
+    $('r-mig').textContent = Math.round(mig * 100) + '%';
+    $('r-direto').textContent = brl.format(direto);
+    $('r-eco').textContent = brl.format(economia);
+    $('r-ano').innerHTML = '<strong>' + brl.format(economia * 12) + '</strong>';
+
+    var pay;
+    if (economia <= 0) pay = '—';
+    else {
+      var meses = DELIVERY_PRO / economia;
+      pay = meses > 60 ? 'mais de 5 anos' : dec1.format(meses) + ' meses';
+    }
+    $('r-pay').innerHTML = '<strong>' + pay + '</strong>';
+
+    var msg = 'Olá Vinícius! Fiz a simulação no seu site: hoje pago cerca de ' + brl.format(pagoHoje) +
+      ' por mês de comissão nos aplicativos. Quero um orçamento para trazer pedidos direto para o meu WhatsApp.';
+    $('calc-wa').href = waLink(msg);
+  }
+  [elFat, elCom, elMig].forEach(function (el) { el.addEventListener('input', calc); });
+  calc();
+
+  /* ---------- Sites de restaurante (vêm do painel admin; se o servidor falhar, usa a lista padrão) ---------- */
+  var FALLBACK = [
+    { nome: 'O Barretão', descricao: 'Churrascaria com sistema de delivery e fidelidade', link: 'https://barretao-restaurante.onrender.com', imagem: 'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=300' },
+    { nome: 'Ancoreta', descricao: 'Restaurante com frutos do mar e vista privilegiada', link: 'https://ancora-restaurante.onrender.com', imagem: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=300' },
+    { nome: 'Tiowei', descricao: 'Comida japonesa com sistema de reservas', link: 'https://tiowei-restaurante.onrender.com', imagem: 'https://images.unsplash.com/photo-1617196035154-1e7e6e28b0db?w=300' },
+    { nome: 'Leone', descricao: 'Culinária italiana com cardápio digital', link: 'https://leone-restaurante.onrender.com', imagem: 'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=300' },
+    { nome: "D'Melo Bolos", descricao: 'Confeitaria artesanal com pedidos online', link: 'https://dmelo-bolos.onrender.com', imagem: 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=300' }
+  ];
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function safeUrl(u) {
+    try { var x = new URL(u, location.href); return (x.protocol === 'https:' || x.protocol === 'http:') ? x.href : null; }
+    catch (e) { return null; }
+  }
+  function bigImg(u) { return typeof u === 'string' ? u.replace('w=300', 'w=900') : u; }
+
+  function renderProjects(list) {
+    var box = $('projects');
+    box.textContent = '';
+    if (!list.length) { box.appendChild(el('p', 'projects__empty', 'Em breve, novos sites por aqui.')); return; }
+
+    list.forEach(function (p, i) {
+      var href = safeUrl(p.link);
+      var card = el(href ? 'a' : 'div', 'proj' + (i === 0 ? ' proj--feature' : ''));
+      if (href) { card.href = href; card.target = '_blank'; card.rel = 'noopener'; }
+
+      var bar = el('div', 'proj__bar');
+      bar.setAttribute('aria-hidden', 'true');
+      bar.appendChild(el('i')); bar.appendChild(el('i')); bar.appendChild(el('i'));
+      bar.appendChild(el('span', null, href ? new URL(href).host : p.nome));
+      card.appendChild(bar);
+
+      var shot = el('div', 'proj__shot');
+      var imgUrl = safeUrl(bigImg(p.imagem));
+      if (imgUrl) {
+        var img = document.createElement('img');
+        img.src = imgUrl; img.alt = 'Página inicial do site ' + p.nome; img.loading = 'lazy';
+        img.addEventListener('error', function () { shot.textContent = (p.nome || '?').charAt(0); });
+        shot.appendChild(img);
+      } else { shot.textContent = (p.nome || '?').charAt(0); }
+      card.appendChild(shot);
+
+      var body = el('div', 'proj__body');
+      body.appendChild(el('h3', 'h3', p.nome));
+      body.appendChild(el('p', null, p.descricao));
+      if (href) {
+        var go = el('span', 'proj__go', 'Abrir o site ao vivo ');
+        go.insertAdjacentHTML('beforeend', '<svg class="ico ico--line" style="width:1em;height:1em;stroke-width:2.2" aria-hidden="true"><use href="#i-out"/></svg>');
+        body.appendChild(go);
+      }
+      card.appendChild(body);
+      box.appendChild(card);
+    });
+  }
+
+  fetch('/api/projetos')
+    .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+    .then(function (rows) { renderProjects(Array.isArray(rows) && rows.length ? rows : FALLBACK); })
+    .catch(function () { renderProjects(FALLBACK); });
+
+  /* ---------- Promoção ativa (cadastrada no painel admin) ---------- */
+  function textOn(hex) {
+    var h = hex.replace('#', '');
+    if (h.length === 3) h = h.split('').map(function (c) { return c + c; }).join('');
+    var r = parseInt(h.substr(0, 2), 16), g = parseInt(h.substr(2, 2), 16), b = parseInt(h.substr(4, 2), 16);
+    return (0.299 * r + 0.587 * g + 0.114 * b) > 150 ? '#0F1B3D' : '#fff';
+  }
+  fetch('/api/promocao/ativa')
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (p) {
+      if (!p || !p.titulo) return;
+      var bar = $('promo');
+      var inner = el('div', 'wrap promo__in');
+      var tag = el('span', 'promo__tag', 'Promoção');
+      var cor = /^#[0-9a-f]{3}([0-9a-f]{3})?$/i.test(p.cor_destaque || '') ? p.cor_destaque : '#FFC21A';
+      tag.style.background = cor; tag.style.color = textOn(cor);
+      inner.appendChild(tag);
+      inner.appendChild(el('span', null, p.titulo + (p.descricao ? ': ' + p.descricao : '')));
+      if (p.preco_promocional) {
+        var price = el('span');
+        if (p.preco_original) price.appendChild(document.createTextNode('De ' + p.preco_original + ' por '));
+        price.appendChild(el('strong', null, p.preco_promocional));
+        inner.appendChild(price);
+      }
+      if (p.bonus) inner.appendChild(el('span', null, '+ ' + p.bonus));
+      if (p.data_validade) {
+        var d = new Date(p.data_validade);
+        if (!isNaN(d)) inner.appendChild(el('span', null, 'Até ' + d.toLocaleDateString('pt-BR')));
+      }
+      inner.appendChild(el('span', 'promo__go', 'Quero aproveitar'));
+      bar.textContent = '';
+      bar.appendChild(inner);
+      bar.href = waLink('Olá Vinícius! Quero aproveitar a promoção: ' + p.titulo);
+      bar.hidden = false;
+    })
+    .catch(function () {});
+
+  /* ---------- Galeria de design: ver trabalho ampliado ---------- */
+  var lb = $('lightbox');
+  function fillPrice(node, preco, oferta) {
+    node.textContent = '';
+    if (!(preco > 0)) { node.hidden = true; return; }
+    node.hidden = false;
+    if (oferta > 0 && oferta < preco) {
+      node.appendChild(el('s', null, 'R$ ' + fmtPreco(preco)));
+      node.appendChild(document.createTextNode('R$ ' + fmtPreco(oferta)));
+      node.appendChild(el('i', null, 'Oferta'));
+    } else {
+      node.textContent = 'A partir de R$ ' + fmtPreco(preco);
+    }
+  }
+  function bindWorks() {
+    document.querySelectorAll('.work').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var src = btn.querySelector('img');
+        $('lb-img').src = src.currentSrc || src.src;
+        $('lb-img').alt = src.alt;
+        $('lb-cap').textContent = btn.dataset.title + (btn.dataset.type ? ' · ' + btn.dataset.type : '');
+        var preco = parseInt(btn.dataset.price, 10), oferta = parseInt(btn.dataset.offer, 10) || 0;
+        var final = oferta > 0 && oferta < preco ? oferta : preco;
+        fillPrice($('lb-price'), preco, oferta);
+        $('lb-buy-box').hidden = false;
+        $('lb-buy').href = waLink('Olá Vinícius! Vi no seu site a arte "' + btn.dataset.title + '"' + (final > 0 ? ' (R$ ' + fmtPreco(final) + ')' : '') + ' e quero uma arte assim.');
+        if (typeof lb.showModal === 'function') lb.showModal();
+      });
+    });
+  }
+  lb.addEventListener('click', function (e) { if (e.target === lb) lb.close(); });
+  bindWorks();
+
+  // Os trabalhos vêm do painel admin. Se o servidor falhar, fica a galeria que já está no HTML.
+  function buildWork(w) {
+    var btn = el('button', 'work');
+    btn.type = 'button';
+    btn.dataset.title = w.titulo; btn.dataset.type = w.tipo || '';
+    if (w.preco > 0) btn.dataset.price = w.preco;
+    if (w.preco_oferta > 0) btn.dataset.offer = w.preco_oferta;
+    var box = el('span', 'work__img');
+    var img = document.createElement('img');
+    img.src = safeUrl(w.imagem) || '';
+    img.alt = 'Arte "' + w.titulo + '"' + (w.tipo ? ' (' + w.tipo + ')' : '');
+    img.loading = 'lazy';
+    if (w.largura && w.altura) { img.width = w.largura; img.height = w.altura; }
+    box.appendChild(img);
+    var cap = el('span', 'work__cap');
+    cap.appendChild(el('strong', null, w.titulo));
+    if (w.tipo) cap.appendChild(el('span', null, w.tipo));
+    if (w.preco > 0) { var pr = el('span', 'work__price'); fillPrice(pr, w.preco, w.preco_oferta); cap.appendChild(pr); }
+    btn.appendChild(box); btn.appendChild(cap);
+    return btn;
+  }
+  function renderGallery(list) {
+    var box = document.querySelector('.gallery');
+    var cols = [el('div', 'gallery__col'), el('div', 'gallery__col'), el('div', 'gallery__col')];
+    var alturas = [0, 0, 0];
+    list.forEach(function (w) {
+      var prop = (w.largura && w.altura) ? w.altura / w.largura : 1;
+      var i = alturas.indexOf(Math.min.apply(null, alturas));
+      alturas[i] += prop + 0.2;
+      cols[i].appendChild(buildWork(w));
+    });
+    box.textContent = '';
+    cols.forEach(function (c) { box.appendChild(c); });
+    bindWorks();
+  }
+  fetch('/api/trabalhos')
+    .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+    .then(function (rows) {
+      if (!Array.isArray(rows) || !rows.length) return;
+      renderGallery(rows);
+      var precos = rows.map(function (w) { return w.preco_oferta > 0 ? w.preco_oferta : w.preco; }).filter(function (n) { return n > 0; });
+      if (precos.length) $('design-note').textContent = 'Artes a partir de R$ ' + fmtPreco(Math.min.apply(null, precos)) + '.';
+    })
+    .catch(function () {});
+
+  /* ---------- Pedir arte: mensagem do WhatsApp muda com o tipo escolhido ---------- */
+  function orderLink() {
+    var checked = document.querySelector('#chips input:checked');
+    var tipo = checked ? checked.value : 'uma arte';
+    $('order-wa').href = waLink('Olá Vinícius! Vi seus designs no site e quero ' + tipo + '.');
+  }
+  document.querySelectorAll('#chips input').forEach(function (i) { i.addEventListener('change', orderLink); });
+  orderLink();
+
+  /* ---------- Copiar usuário do Discord ---------- */
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    var hint = btn.querySelector('.copy__hint');
+    btn.addEventListener('click', function () {
+      var txt = btn.getAttribute('data-copy');
+      function done(ok) {
+        hint.textContent = ok ? 'copiado!' : 'selecione e copie';
+        setTimeout(function () { hint.textContent = 'copiar'; }, 2200);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(function () { done(true); }, function () { done(false); });
+      } else { done(false); }
+    });
+  });
+
+  /* ---------- Formulário ---------- */
+  var form = $('contact-form'), status = $('form-status'), send = $('send');
+  function setStatus(msg, kind) { status.textContent = ''; status.className = 'form__status' + (kind ? ' is-' + kind : ''); status.textContent = msg; }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var nome = $('nome').value.trim(), email = $('email').value.trim(), tel = $('telefone').value.trim(), msg = $('mensagem').value.trim();
+    if (!nome || !email || !tel || !msg) { setStatus('Preencha nome, WhatsApp, e-mail e a mensagem para enviar.', 'err'); return; }
+    if (!/^\S+@\S+\.\S+$/.test(email)) { setStatus('Confira o e-mail: ele precisa ter o formato nome@dominio.com.', 'err'); return; }
+
+    send.disabled = true; send.textContent = 'Enviando…'; setStatus('');
+    fetch('/api/contato', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nome: nome, email: email, telefone: tel, mensagem: 'Interesse: ' + $('interesse').value + '\n\n' + msg })
+    })
+    .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+    .then(function () {
+      form.reset();
+      setStatus('Mensagem enviada. Vou te chamar no WhatsApp em breve.', 'ok');
+    })
+    .catch(function () {
+      status.className = 'form__status is-err';
+      status.textContent = 'Não consegui enviar agora. Chame direto no ';
+      var a = el('a', null, 'WhatsApp');
+      a.href = waLink('Olá Vinícius! Tentei enviar o formulário do site e não funcionou. Quero fazer um orçamento.');
+      a.target = '_blank'; a.rel = 'noopener';
+      status.appendChild(a);
+      status.appendChild(document.createTextNode('.'));
+    })
+    .then(function () { send.disabled = false; send.textContent = 'Enviar mensagem'; });
+  });
+})();
+</script>
+</body>
+</html>

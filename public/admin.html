@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel | vini.dev</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23FFC21A'/%3E%3Cpath d='M7 9h18l-9 15z' fill='%236A3DF0'/%3E%3C/svg%3E">
+<style>
+@font-face { font-family: "Bricolage"; src: url("/fonts/bricolage.woff2") format("woff2"); font-weight: 200 800; font-stretch: 75% 100%; font-display: swap; }
+@font-face { font-family: "Plex Mono"; src: url("/fonts/plexmono-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Plex Mono"; src: url("/fonts/plexmono-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+
+:root {
+  --mostarda: #FFC21A; --mostarda-claro: #FFF4D6; --nanquim: #0F1B3D; --nanquim-2: #1C2D5E;
+  --papel: #F4F3EF; --fundo: #FBFAF6; --violeta: #6A3DF0; --lilas: #EFEAFF;
+  --pimenta: #C0301B; --manjericao: #17703F; --suave: #4A5370;
+  --display: "Bricolage", "Helvetica Neue", Arial, sans-serif; --mono: "Plex Mono", ui-monospace, monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--display); font-size: 1rem; line-height: 1.55; color: var(--nanquim); background: var(--fundo); min-height: 100vh; }
+img { max-width: 100%; display: block; }
+button, input, select, textarea { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 3px solid var(--violeta); outline-offset: 2px; }
+.wrap { width: min(1100px, 100% - 2.5rem); margin-inline: auto; }
+.mono { font-family: var(--mono); }
+
+/* Botões */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .7rem 1.2rem; border-radius: 8px; border: 2px solid var(--nanquim); background: transparent; color: var(--nanquim); font-weight: 700; font-size: .95rem; cursor: pointer; text-decoration: none; line-height: 1.2; transition: transform .15s ease, background-color .15s ease; }
+.btn:hover { transform: translateY(-1px); }
+.btn--solid { background: var(--nanquim); color: var(--papel); }
+.btn--sun { background: var(--mostarda); }
+.btn--danger { border-color: var(--pimenta); color: var(--pimenta); }
+.btn--danger:hover { background: var(--pimenta); color: #fff; }
+.btn--small { padding: .4rem .8rem; font-size: .88rem; }
+.btn[disabled] { opacity: .55; cursor: wait; transform: none; }
+.link { background: none; border: 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; font-weight: 600; padding: 0; }
+
+/* Login */
+.login { min-height: 100vh; display: grid; place-items: center; background: var(--nanquim); padding: 1.25rem; }
+.login__card { width: min(400px, 100%); background: var(--papel); border: 2px solid var(--mostarda); border-radius: 12px; padding: 2rem 1.75rem; display: grid; gap: 1rem; }
+.login__card h1 { font-size: 1.9rem; font-weight: 800; font-stretch: 80%; letter-spacing: -0.02em; }
+.login__card h1 span { font-weight: 300; }
+.login__card p { color: var(--suave); }
+
+/* Campos */
+.field { display: grid; gap: .35rem; }
+.field label, .field .lbl { font-weight: 600; font-size: .95rem; }
+.field small { color: var(--suave); font-size: .86rem; }
+.field input[type=text], .field input[type=password], .field input[type=email], .field input[type=number], .field input[type=url], .field input[type=datetime-local], .field input[type=tel], .field select, .field textarea {
+  width: 100%; padding: .7rem .8rem; background: #fff; border: 2px solid var(--nanquim); border-radius: 8px; }
+.field textarea { resize: vertical; min-height: 5.5rem; }
+.field input[type=color] { width: 4rem; height: 2.6rem; padding: 2px; border: 2px solid var(--nanquim); border-radius: 8px; background: #fff; }
+.check { display: flex; gap: .6rem; align-items: center; font-weight: 600; }
+.check input { width: 1.15rem; height: 1.15rem; accent-color: var(--violeta); }
+.prefix { display: flex; align-items: center; border: 2px solid var(--nanquim); border-radius: 8px; background: #fff; padding-left: .8rem; font-weight: 700; }
+.prefix input { border: 0 !important; border-radius: 0 !important; background: transparent !important; }
+.field__row { display: flex; justify-content: space-between; gap: .75rem; align-items: baseline; }
+.err { color: var(--pimenta); font-weight: 600; min-height: 1.4em; }
+
+/* Barra superior */
+.bar { background: var(--nanquim); color: var(--papel); }
+.bar__top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .8rem 0; }
+.logo { font-size: 1.5rem; font-weight: 800; font-stretch: 80%; letter-spacing: -0.03em; }
+.logo span { font-weight: 300; }
+.logo em { font-style: normal; font-weight: 500; font-stretch: 100%; font-size: .9rem; opacity: .75; margin-left: .5rem; letter-spacing: 0; }
+.bar__act { display: flex; gap: .6rem; align-items: center; }
+.bar .btn { border-color: rgba(244,243,239,.5); color: var(--papel); }
+.bar .btn:hover { background: var(--papel); color: var(--nanquim); }
+.tabs { display: flex; gap: .25rem; overflow-x: auto; scrollbar-width: thin; }
+.tab { background: none; border: 0; border-bottom: 4px solid transparent; color: #C7CFE8; padding: .7rem .9rem; font-weight: 700; cursor: pointer; white-space: nowrap; display: flex; gap: .5rem; align-items: center; }
+.tab:hover { color: #fff; }
+.tab[aria-selected="true"] { color: #fff; border-bottom-color: var(--mostarda); }
+.badge { background: var(--mostarda); color: var(--nanquim); border-radius: 99px; font-size: .78rem; padding: 0 .5rem; font-weight: 800; }
+
+/* Painéis */
+.panel { padding: 2rem 0 4rem; }
+.panel__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 1.5rem; }
+.panel__head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; font-stretch: 82%; letter-spacing: -0.02em; line-height: 1.1; }
+.panel__head p { color: var(--suave); margin-top: .35rem; max-width: 40rem; }
+.card { background: #fff; border: 2px solid var(--nanquim); border-radius: 10px; padding: 1.4rem; }
+.stack { display: grid; gap: 1.1rem; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+.form-card { max-width: 46rem; }
+.form-card h3 { font-size: 1.15rem; margin-bottom: .2rem; }
+.form-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: .5rem; }
+.empty { border: 2px dashed var(--nanquim); border-radius: 10px; padding: 2rem; text-align: center; color: var(--suave); }
+.preview { font-family: var(--mono); font-size: .82rem; color: var(--suave); overflow-wrap: anywhere; }
+
+/* Mensagens */
+.filters { display: flex; gap: .5rem; flex-wrap: wrap; }
+.chip { padding: .4rem .9rem; border: 2px solid var(--nanquim); border-radius: 99px; background: #fff; font-weight: 600; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--nanquim); color: var(--papel); }
+.msg { display: grid; gap: .6rem; }
+.msg--new { border-color: var(--violeta); box-shadow: 5px 5px 0 var(--lilas); }
+.msg__top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; align-items: baseline; }
+.msg__name { font-size: 1.15rem; font-weight: 800; }
+.msg__date { color: var(--suave); font-size: .9rem; }
+.tag { display: inline-block; background: var(--mostarda-claro); border: 2px solid var(--nanquim); border-radius: 6px; padding: .05rem .55rem; font-weight: 700; font-size: .85rem; }
+.tag--design { background: var(--lilas); }
+.msg__body { white-space: pre-wrap; overflow-wrap: anywhere; }
+.msg__contact { color: var(--suave); font-size: .95rem; }
+.msg__btns { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .3rem; }
+
+/* Listas com miniatura */
+.items { display: grid; gap: 1rem; }
+.item { display: grid; grid-template-columns: 120px 1fr auto; gap: 1rem; align-items: center; padding: 1rem; }
+.item--off { opacity: .6; }
+.item__thumb { width: 120px; height: 90px; border-radius: 6px; border: 2px solid var(--nanquim); background: var(--papel); overflow: hidden; display: grid; place-items: center; color: var(--suave); font-size: .8rem; text-align: center; }
+.item__thumb img { width: 100%; height: 100%; object-fit: cover; }
+.item h3 { font-size: 1.1rem; line-height: 1.25; }
+.item p { color: var(--suave); font-size: .93rem; overflow-wrap: anywhere; }
+.item__btns { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: flex-end; }
+.sq { width: 2.2rem; height: 2.2rem; padding: 0; }
+@media (max-width: 720px) {
+  .item { grid-template-columns: 84px 1fr; }
+  .item__thumb { width: 84px; height: 64px; }
+  .item__btns { grid-column: 1 / -1; justify-content: flex-start; }
+  .grid2 { grid-template-columns: 1fr; }
+}
+
+/* Envio de imagem */
+.pick { display: grid; grid-template-columns: 150px 1fr; gap: 1rem; align-items: start; }
+.pick__prev { width: 150px; height: 110px; border: 2px solid var(--nanquim); border-radius: 8px; background: var(--papel); overflow: hidden; display: grid; place-items: center; color: var(--suave); font-size: .85rem; text-align: center; padding: .3rem; }
+.pick__prev img { width: 100%; height: 100%; object-fit: contain; background: #fff; }
+.pick__ctl { display: grid; gap: .5rem; }
+.pick__row { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; }
+.pick__msg { font-size: .88rem; color: var(--suave); }
+.pick__msg.is-err { color: var(--pimenta); font-weight: 600; }
+@media (max-width: 520px) { .pick { grid-template-columns: 1fr; } }
+
+/* Janelas */
+dialog { border: 2px solid var(--nanquim); border-radius: 12px; padding: 0; width: min(560px, calc(100% - 1.5rem)); max-height: 92vh; background: var(--fundo); color: var(--nanquim); }
+dialog::backdrop { background: rgba(15,27,61,.7); }
+.dlg { padding: 1.5rem; display: grid; gap: 1rem; }
+.dlg h3 { font-size: 1.4rem; font-weight: 800; font-stretch: 85%; letter-spacing: -0.01em; }
+.dlg__btns { display: flex; gap: .6rem; justify-content: flex-end; flex-wrap: wrap; }
+
+/* Aviso */
+.toast { position: fixed; left: 50%; bottom: 1.5rem; transform: translateX(-50%) translateY(20px); background: var(--nanquim); color: var(--papel); padding: .8rem 1.2rem; border-radius: 8px; border: 2px solid var(--mostarda); font-weight: 600; opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; z-index: 100; max-width: calc(100% - 2rem); }
+.toast.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.is-err { border-color: #ff8a78; background: #4a1008; }
+@media (prefers-reduced-motion: reduce) { .toast, .btn { transition: none; } }
+</style>
+</head>
+<body>
+
+<!-- ============ Login ============ -->
+<main class="login" id="login">
+  <form class="login__card" id="login-form">
+    <h1>vini<span>.dev</span> painel</h1>
+    <p>Entre para editar o seu site.</p>
+    <div class="field"><label for="u">Usuário</label><input type="text" id="u" autocomplete="username" required></div>
+    <div class="field"><label for="p">Senha</label><input type="password" id="p" autocomplete="current-password" required></div>
+    <p class="err" id="login-err" role="alert"></p>
+    <button class="btn btn--sun" type="submit" id="login-btn">Entrar</button>
+  </form>
+</main>
+
+<!-- ============ Painel ============ -->
+<div id="app" hidden>
+  <header class="bar">
+    <div class="wrap">
+      <div class="bar__top">
+        <div class="logo">vini<span>.dev</span><em>painel</em></div>
+        <div class="bar__act">
+          <a class="btn btn--small" href="/" target="_blank" rel="noopener">Ver o site</a>
+          <button class="btn btn--small" id="logout" type="button">Sair</button>
+        </div>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Seções do painel">
+        <button class="tab" role="tab" data-tab="msgs" aria-selected="true">Mensagens <span class="badge" id="badge-msgs" hidden>0</span></button>
+        <button class="tab" role="tab" data-tab="contatos" aria-selected="false">Contatos e redes</button>
+        <button class="tab" role="tab" data-tab="textos" aria-selected="false">Textos e preços</button>
+        <button class="tab" role="tab" data-tab="trabalhos" aria-selected="false">Trabalhos de design</button>
+        <button class="tab" role="tab" data-tab="sites" aria-selected="false">Sites de restaurante</button>
+        <button class="tab" role="tab" data-tab="promos" aria-selected="false">Ofertas</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- Mensagens -->
+    <section class="panel" id="tab-msgs" role="tabpanel">
+      <div class="panel__head">
+        <div><h2>Mensagens recebidas</h2><p>Pedidos de orçamento enviados pelo formulário do site.</p></div>
+        <div class="filters" role="group" aria-label="Filtro">
+          <button class="chip" type="button" data-filter="pendente" aria-pressed="true">Novas</button>
+          <button class="chip" type="button" data-filter="todas" aria-pressed="false">Todas</button>
+        </div>
+      </div>
+      <div class="stack" id="msgs-list"></div>
+    </section>
+
+    <!-- Contatos e redes -->
+    <section class="panel" id="tab-contatos" role="tabpanel" hidden>
+      <div class="panel__head">
+        <div><h2>Contatos e redes</h2><p>Mudou de número ou de perfil? Altere aqui e o site inteiro é atualizado: botões, rodapé e formulário.</p></div>
+      </div>
+      <form class="card form-card stack" id="form-contatos" novalidate>
+        <div class="field">
+          <label for="c-whatsapp">WhatsApp</label>
+          <input type="tel" id="c-whatsapp" inputmode="tel" placeholder="5583999999999">
+          <small>Número com código do país e DDD, só números. Exemplo: 5583988655944.</small>
+          <span class="preview" id="pv-whatsapp"></span>
+        </div>
+        <div class="field">
+          <label for="c-email">E-mail</label>
+          <input type="email" id="c-email" placeholder="voce@exemplo.com">
+        </div>
+        <div class="grid2">
+          <div class="field">
+            <label for="c-instagram">Instagram</label>
+            <div class="prefix">@<input type="text" id="c-instagram" placeholder="vini.wdev"></div>
+            <small>Só o nome de usuário. Se colar o link do perfil, eu corrijo.</small>
+          </div>
+          <div class="field">
+            <label for="c-discord">Discord</label>
+            <div class="prefix">@<input type="text" id="c-discord" placeholder="seuusuario"></div>
+            <small>Aparece com um botão para o visitante copiar.</small>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label for="c-youtube">YouTube (opcional)</label><input type="url" id="c-youtube" placeholder="https://youtube.com/@seucanal"></div>
+          <div class="field"><label for="c-tiktok">TikTok (opcional)</label><input type="url" id="c-tiktok" placeholder="https://tiktok.com/@seuusuario"></div>
+        </div>
+        <div class="field"><label for="c-behance">Behance ou portfólio (opcional)</label><input type="url" id="c-behance" placeholder="https://behance.net/seuusuario"><small>Redes opcionais aparecem como links no rodapé. Deixe em branco para esconder.</small></div>
+        <div class="form-actions">
+          <button class="btn btn--solid" type="submit">Salvar contatos</button>
+          <span class="err" id="err-contatos" role="alert"></span>
+        </div>
+      </form>
+    </section>
+
+    <!-- Textos e preços -->
+    <section class="panel" id="tab-textos" role="tabpanel" hidden>
+      <div class="panel__head">
+        <div><h2>Textos e preços</h2><p>Os textos principais do site e o valor de cada plano. Para voltar ao texto original, use "Restaurar original" ao lado do campo.</p></div>
+      </div>
+      <form class="stack" id="form-textos" novalidate>
+        <div class="card form-card stack">
+          <h3>Início: restaurantes</h3>
+          <div class="field"><div class="field__row"><label for="t-hero_food_title">Título</label><button type="button" class="link" data-reset="hero_food_title">Restaurar original</button></div><input type="text" id="t-hero_food_title" maxlength="140"></div>
+          <div class="field"><div class="field__row"><label for="t-hero_food_lead">Texto de apoio</label><button type="button" class="link" data-reset="hero_food_lead">Restaurar original</button></div><textarea id="t-hero_food_lead" maxlength="300"></textarea></div>
+        </div>
+        <div class="card form-card stack">
+          <h3>Início: design</h3>
+          <div class="field"><div class="field__row"><label for="t-hero_design_title">Título</label><button type="button" class="link" data-reset="hero_design_title">Restaurar original</button></div><input type="text" id="t-hero_design_title" maxlength="140"></div>
+          <div class="field"><div class="field__row"><label for="t-hero_design_lead">Texto de apoio</label><button type="button" class="link" data-reset="hero_design_lead">Restaurar original</button></div><textarea id="t-hero_design_lead" maxlength="300"></textarea></div>
+        </div>
+        <div class="card form-card stack">
+          <h3>Sobre mim</h3>
+          <div class="field"><div class="field__row"><label for="t-about_p1">Primeiro parágrafo</label><button type="button" class="link" data-reset="about_p1">Restaurar original</button></div><textarea id="t-about_p1" maxlength="600"></textarea></div>
+          <div class="field"><div class="field__row"><label for="t-about_p2">Segundo parágrafo</label><button type="button" class="link" data-reset="about_p2">Restaurar original</button></div><textarea id="t-about_p2" maxlength="400"></textarea></div>
+          <div class="field"><span class="lbl">Foto</span><div id="pick-sobre"></div><small>Opcional. Sem foto, o site mostra o desenho com "Sites" e "Design".</small></div>
+        </div>
+        <div class="card form-card stack">
+          <h3>Preços dos planos de site</h3>
+          <div class="grid2">
+            <div class="field"><label for="t-preco_essencial">Essencial</label><div class="prefix">R$<input type="text" id="t-preco_essencial" inputmode="numeric"></div></div>
+            <div class="field"><label for="t-preco_delivery">Delivery Pro</label><div class="prefix">R$<input type="text" id="t-preco_delivery" inputmode="numeric"></div></div>
+            <div class="field"><label for="t-preco_premium">Premium</label><div class="prefix">R$<input type="text" id="t-preco_premium" inputmode="numeric"></div></div>
+          </div>
+          <small class="preview">O preço do Delivery Pro também entra na calculadora de comissão.</small>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn--solid" type="submit">Salvar textos e preços</button>
+          <span class="err" id="err-textos" role="alert"></span>
+        </div>
+      </form>
+    </section>
+
+    <!-- Trabalhos de design -->
+    <section class="panel" id="tab-trabalhos" role="tabpanel" hidden>
+      <div class="panel__head">
+        <div><h2>Trabalhos de design</h2><p>As artes que aparecem na galeria do site. Use as setas para mudar a ordem.</p></div>
+        <button class="btn btn--sun" type="button" id="add-trabalho">Adicionar trabalho</button>
+      </div>
+      <div class="items" id="trabalhos-list"></div>
+    </section>
+
+    <!-- Sites de restaurante -->
+    <section class="panel" id="tab-sites" role="tabpanel" hidden>
+      <div class="panel__head">
+        <div><h2>Sites de restaurante</h2><p>Os sites que você já fez e que aparecem em "Sites que já fiz". O primeiro da lista ganha destaque.</p></div>
+        <button class="btn btn--sun" type="button" id="add-site">Adicionar site</button>
+      </div>
+      <div class="items" id="sites-list"></div>
+    </section>
+
+    <!-- Promoções -->
+    <section class="panel" id="tab-promos" role="tabpanel" hidden>
+      <div class="panel__head">
+        <div><h2>Ofertas</h2><p>Coloque e tire ofertas do site quando quiser. Se você definir uma data de fim, a oferta sai do ar sozinha.</p></div>
+      </div>
+
+      <form class="card form-card stack" id="form-of-designs" style="margin-bottom:1.4rem" novalidate>
+        <h3>Oferta nas artes de design</h3>
+        <p class="preview" id="of-designs-status"></p>
+        <div class="grid2">
+          <div class="field"><label for="od-pct">Desconto em todas as artes</label><div class="prefix"><input type="text" id="od-pct" inputmode="numeric" placeholder="Ex.: 20"> %</div></div>
+          <div class="field"><label for="od-ate">Termina em (opcional)</label><input type="datetime-local" id="od-ate"></div>
+        </div>
+        <small>Vale para as artes que têm preço. Para oferta só em uma arte, use "Editar" em Trabalhos de design.</small>
+        <div class="form-actions">
+          <button class="btn btn--solid" type="submit" id="od-apply">Aplicar em todas</button>
+          <button class="btn" type="button" id="od-clear">Tirar todas as ofertas</button>
+          <span class="err" id="err-of-designs" role="alert"></span>
+        </div>
+      </form>
+
+      <form class="card form-card stack" id="form-of-planos" style="margin-bottom:1.4rem" novalidate>
+        <h3>Oferta nos planos de site</h3>
+        <p class="preview" id="of-planos-status"></p>
+        <div class="grid2">
+          <div class="field"><label for="op-essencial">Essencial (preço em oferta)</label><div class="prefix">R$<input type="text" id="op-essencial" inputmode="numeric"></div></div>
+          <div class="field"><label for="op-delivery">Delivery Pro (preço em oferta)</label><div class="prefix">R$<input type="text" id="op-delivery" inputmode="numeric"></div></div>
+          <div class="field"><label for="op-premium">Premium (preço em oferta)</label><div class="prefix">R$<input type="text" id="op-premium" inputmode="numeric"></div></div>
+          <div class="field"><label for="op-ate">Termina em (opcional)</label><input type="datetime-local" id="op-ate"></div>
+        </div>
+        <small>Deixe em branco o plano que não terá oferta. O preço em oferta precisa ser menor que o normal.</small>
+        <div class="form-actions">
+          <button class="btn btn--solid" type="submit" id="op-save">Salvar ofertas dos planos</button>
+          <button class="btn" type="button" id="op-clear">Tirar ofertas dos planos</button>
+          <span class="err" id="err-of-planos" role="alert"></span>
+        </div>
+      </form>
+
+      <div class="panel__head" style="margin-top:2.2rem">
+        <div><h3>Faixa de promoção no topo</h3><p>A promoção ativa aparece numa faixa no topo do site até a data de validade. Se houver mais de uma ativa, aparece a mais recente.</p></div>
+        <button class="btn btn--sun" type="button" id="add-promo">Criar promoção</button>
+      </div>
+      <div class="items" id="promos-list"></div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============ Janelas ============ -->
+<dialog id="dlg-trabalho">
+  <form class="dlg" id="form-trabalho" method="dialog">
+    <h3 id="dlg-trabalho-title">Adicionar trabalho</h3>
+    <div class="field"><label for="w-titulo">Título</label><input type="text" id="w-titulo" maxlength="80" required></div>
+    <div class="field"><label for="w-tipo">Tipo</label><input type="text" id="w-tipo" maxlength="80" list="tipos" placeholder="Ex.: Capa de música"><datalist id="tipos"><option value="Arte de divulgação de música"><option value="Banner para loja de Discord"><option value="Logo e avatar"><option value="Wallpaper de jogo"><option value="Post para rede social"></datalist></div>
+    <div class="field"><span class="lbl">Imagem</span><div id="pick-trabalho"></div></div>
+    <div class="grid2">
+      <div class="field"><label for="w-preco">Preço</label><div class="prefix">R$<input type="text" id="w-preco" inputmode="numeric" placeholder="Ex.: 40"></div></div>
+      <div class="field"><label for="w-oferta">Preço em oferta</label><div class="prefix">R$<input type="text" id="w-oferta" inputmode="numeric" placeholder="vazio = sem oferta"></div></div>
+    </div>
+    <div class="field"><label for="w-ate">Oferta termina em (opcional)</label><input type="datetime-local" id="w-ate"></div>
+    <label class="check"><input type="checkbox" id="w-ativo" checked> Mostrar no site</label>
+    <p class="err" id="err-trabalho" role="alert"></p>
+    <div class="dlg__btns">
+      <button class="btn" type="button" data-close>Cancelar</button>
+      <button class="btn btn--solid" type="submit" id="save-trabalho">Salvar</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlg-site">
+  <form class="dlg" id="form-site" method="dialog">
+    <h3 id="dlg-site-title">Adicionar site</h3>
+    <div class="field"><label for="s-nome">Nome do restaurante</label><input type="text" id="s-nome" maxlength="80" required></div>
+    <div class="field"><label for="s-desc">Descrição</label><textarea id="s-desc" maxlength="300" required placeholder="Ex.: Churrascaria com delivery e fidelidade"></textarea></div>
+    <div class="field"><label for="s-link">Link do site</label><input type="url" id="s-link" placeholder="https://"></div>
+    <div class="field"><span class="lbl">Imagem de capa</span><div id="pick-site"></div></div>
+    <div class="grid2">
+      <div class="field"><label for="s-ordem">Posição na lista</label><input type="number" id="s-ordem" step="1"><small>Número menor aparece primeiro.</small></div>
+      <label class="check" style="align-self:center"><input type="checkbox" id="s-destaque"> Destacar este site</label>
+    </div>
+    <p class="err" id="err-site" role="alert"></p>
+    <div class="dlg__btns">
+      <button class="btn" type="button" data-close>Cancelar</button>
+      <button class="btn btn--solid" type="submit" id="save-site">Salvar</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlg-promo">
+  <form class="dlg" id="form-promo" method="dialog">
+    <h3>Criar promoção</h3>
+    <div class="field"><label for="m-titulo">Título</label><input type="text" id="m-titulo" maxlength="120" required placeholder="Ex.: Semana do Delivery"></div>
+    <div class="field"><label for="m-desc">Descrição</label><input type="text" id="m-desc" maxlength="200" placeholder="Ex.: site pronto para receber pedidos"></div>
+    <div class="grid2">
+      <div class="field"><label for="m-orig">Preço de antes</label><input type="text" id="m-orig" placeholder="R$ 2.497"></div>
+      <div class="field"><label for="m-promo">Preço promocional</label><input type="text" id="m-promo" placeholder="R$ 1.997"></div>
+    </div>
+    <div class="field"><label for="m-bonus">Bônus (opcional)</label><input type="text" id="m-bonus" maxlength="120" placeholder="Ex.: logo grátis"></div>
+    <div class="grid2">
+      <div class="field"><label for="m-valid">Vale até</label><input type="datetime-local" id="m-valid" required></div>
+      <div class="field"><label for="m-cor">Cor da etiqueta</label><input type="color" id="m-cor" value="#ff3366"></div>
+    </div>
+    <p class="err" id="err-promo" role="alert"></p>
+    <div class="dlg__btns">
+      <button class="btn" type="button" data-close>Cancelar</button>
+      <button class="btn btn--solid" type="submit" id="save-promo">Criar promoção</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- Utilidades ---------- */
+  var $ = function (id) { return document.getElementById(id); };
+  var token = '';
+  try { token = sessionStorage.getItem('vt') || ''; } catch (e) {}
+  var cfg = {}, padrao = {};
+  var state = { leads: [], trabalhos: [], sites: [], promos: [], filter: 'pendente' };
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function toast(msg, isErr) {
+    var t = $('toast'); t.textContent = msg; t.className = 'toast is-on' + (isErr ? ' is-err' : '');
+    clearTimeout(toast._t); toast._t = setTimeout(function () { t.className = 'toast'; }, isErr ? 5000 : 2600);
+  }
+  function api(method, url, body) {
+    var opts = { method: method, headers: { 'Authorization': 'Bearer ' + token } };
+    if (body !== undefined) { opts.headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(body); }
+    return fetch(url, opts).then(function (r) {
+      if (r.status === 403) { logout(true); throw new Error('Sua sessão expirou. Entre de novo.'); }
+      return r.json().catch(function () { return {}; }).then(function (data) {
+        if (!r.ok) throw new Error(data.error || 'Algo deu errado. Tente de novo.');
+        return data;
+      });
+    });
+  }
+  function fmtDate(d) { var x = new Date(d); return isNaN(x) ? '' : x.toLocaleDateString('pt-BR') + ' às ' + x.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }); }
+  function thumb(src, alt) { return src ? '<img src="' + esc(src) + '" alt="' + esc(alt) + '" loading="lazy">' : 'sem imagem'; }
+  function busy(btn, on, label) { btn.disabled = on; if (label) btn.textContent = on ? 'Salvando…' : label; }
+
+  /* ---------- Login ---------- */
+  function showApp() { $('login').hidden = true; $('app').hidden = false; loadAll(); }
+  function logout(silent) {
+    token = ''; try { sessionStorage.removeItem('vt'); } catch (e) {}
+    $('app').hidden = true; $('login').hidden = false; $('p').value = '';
+    if (silent) { $('login-err').textContent = 'Sua sessão expirou. Entre de novo.'; }
+  }
+  $('logout').addEventListener('click', function () { logout(false); });
+  $('login-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = $('login-btn'), err = $('login-err'); err.textContent = ''; btn.disabled = true;
+    fetch('/api/admin/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: $('u').value.trim(), password: $('p').value }) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, status: r.status, d: d }; }); })
+      .then(function (res) {
+        if (res.ok) { token = res.d.token; try { sessionStorage.setItem('vt', token); } catch (e) {} showApp(); return; }
+        if (res.status === 429) err.textContent = 'Muitas tentativas. Aguarde alguns minutos e tente de novo.';
+        else if (res.status === 401) err.textContent = 'Usuário ou senha incorretos.';
+        else err.textContent = 'O servidor não respondeu direito. Tente de novo em instantes.';
+      })
+      .catch(function () { err.textContent = 'Sem conexão com o servidor. Confira sua internet.'; })
+      .then(function () { btn.disabled = false; });
+  });
+
+  /* ---------- Abas ---------- */
+  var tabs = document.querySelectorAll('.tab');
+  function openTab(id) {
+    tabs.forEach(function (t) { t.setAttribute('aria-selected', t.dataset.tab === id ? 'true' : 'false'); });
+    document.querySelectorAll('[role=tabpanel]').forEach(function (p) { p.hidden = p.id !== 'tab-' + id; });
+    try { sessionStorage.setItem('vtab', id); } catch (e) {}
+  }
+  tabs.forEach(function (t) { t.addEventListener('click', function () { openTab(t.dataset.tab); }); });
+
+  /* ---------- Envio de imagem (reduz antes de enviar) ---------- */
+  function readAndShrink(file, maxSide) {
+    return new Promise(function (resolve, reject) {
+      if (!/^image\/(png|jpeg|webp|gif)$/.test(file.type)) return reject(new Error('Use uma imagem PNG, JPG, WebP ou GIF.'));
+      var url = URL.createObjectURL(file), img = new Image();
+      img.onload = function () {
+        var w = img.naturalWidth, h = img.naturalHeight, k = Math.min(1, maxSide / Math.max(w, h));
+        var cw = Math.max(1, Math.round(w * k)), ch = Math.max(1, Math.round(h * k));
+        var c = document.createElement('canvas'); c.width = cw; c.height = ch;
+        c.getContext('2d').drawImage(img, 0, 0, cw, ch);
+        URL.revokeObjectURL(url);
+        var out = c.toDataURL('image/webp', 0.86);
+        if (out.indexOf('data:image/webp') !== 0) out = c.toDataURL('image/jpeg', 0.88);
+        resolve({ dataUrl: out, w: cw, h: ch });
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); reject(new Error('Não consegui abrir essa imagem.')); };
+      img.src = url;
+    });
+  }
+  function makePicker(root, maxSide) {
+    root.className = 'pick';
+    root.innerHTML = '<div class="pick__prev">sem imagem</div><div class="pick__ctl"><div class="pick__row"><label class="btn btn--small btn--sun" style="cursor:pointer">Enviar imagem<input type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden></label><button type="button" class="link" data-rm>Remover</button></div><input type="text" placeholder="ou cole um link https://…" style="width:100%;padding:.55rem .7rem;border:2px solid var(--nanquim);border-radius:8px;background:#fff" aria-label="Link da imagem"><p class="pick__msg"></p></div>';
+    var prev = root.querySelector('.pick__prev'), file = root.querySelector('input[type=file]'), url = root.querySelector('input[type=text]'), msg = root.querySelector('.pick__msg');
+    var picker = { w: null, h: null, onChange: null };
+    function show() { var v = url.value.trim(); prev.innerHTML = v ? '<img alt="Prévia da imagem" src="' + esc(v) + '">' : 'sem imagem'; }
+    function setMsg(t, err) { msg.textContent = t || ''; msg.className = 'pick__msg' + (err ? ' is-err' : ''); }
+    Object.defineProperty(picker, 'value', { get: function () { return url.value.trim(); }, set: function (v) { url.value = v || ''; picker.w = picker.h = null; setMsg(''); show(); } });
+    url.addEventListener('input', function () { picker.w = picker.h = null; show(); });
+    url.addEventListener('change', function () {
+      var v = url.value.trim(); if (!v) return;
+      var im = new Image(); im.onload = function () { picker.w = im.naturalWidth; picker.h = im.naturalHeight; }; im.src = v;
+    });
+    root.querySelector('[data-rm]').addEventListener('click', function () { picker.value = ''; });
+    file.addEventListener('change', function () {
+      var f = file.files[0]; if (!f) return;
+      setMsg('Enviando…');
+      readAndShrink(f, maxSide).then(function (r) {
+        return api('POST', '/api/admin/imagens', { dataUrl: r.dataUrl }).then(function (res) {
+          url.value = res.url; picker.w = r.w; picker.h = r.h; show();
+          setMsg('Imagem enviada (' + Math.max(1, Math.round(res.bytes / 1024)) + ' KB).');
+        });
+      }).catch(function (e) { setMsg(e.message, true); }).then(function () { file.value = ''; });
+    });
+    return picker;
+  }
+  var pickTrabalho = makePicker($('pick-trabalho'), 1600);
+  var pickSite = makePicker($('pick-site'), 1200);
+  var pickSobre = makePicker($('pick-sobre'), 1000);
+
+  /* ---------- Carregar tudo ---------- */
+  function loadAll() {
+    var first = true;
+    function fail(e) { if (first) { toast(e.message, true); first = false; } }
+    api('GET', '/api/admin/config').then(function (d) { cfg = d.config; padrao = d.padrao; fillConfig(); }).catch(fail);
+    loadLeads().catch(fail); loadTrabalhos().catch(fail); loadSites().catch(fail); loadPromos().catch(fail);
+    try { var t = sessionStorage.getItem('vtab'); if (t) openTab(t); } catch (e) {}
+  }
+
+  /* ---------- Mensagens ---------- */
+  function loadLeads() { return api('GET', '/api/admin/leads').then(function (rows) { state.leads = rows; renderLeads(); }); }
+  function parseLead(m) {
+    var r = /^Interesse:\s*([^\n]*)\n*/.exec(m || '');
+    return r ? { interesse: r[1].trim(), texto: m.slice(r[0].length) } : { interesse: '', texto: m || '' };
+  }
+  function waNumber(t) { var d = String(t || '').replace(/\D/g, ''); if (d.length === 10 || d.length === 11) d = '55' + d; return d; }
+  function renderLeads() {
+    var pend = state.leads.filter(function (l) { return l.status !== 'finalizado'; });
+    var b = $('badge-msgs'); b.textContent = pend.length; b.hidden = pend.length === 0;
+    var list = state.filter === 'pendente' ? pend : state.leads;
+    $('msgs-list').innerHTML = list.length ? list.map(function (l) {
+      var p = parseLead(l.mensagem), novo = l.status !== 'finalizado', num = waNumber(l.telefone);
+      var design = /^design/i.test(p.interesse);
+      return '<article class="card msg' + (novo ? ' msg--new' : '') + '">' +
+        '<div class="msg__top"><span class="msg__name">' + esc(l.nome) + '</span><span class="msg__date">' + esc(fmtDate(l.data)) + (novo ? '' : ' · atendida') + '</span></div>' +
+        (p.interesse ? '<div><span class="tag' + (design ? ' tag--design' : '') + '">' + esc(p.interesse) + '</span></div>' : '') +
+        '<p class="msg__body">' + esc(p.texto) + '</p>' +
+        '<p class="msg__contact">' + esc(l.telefone || 'sem WhatsApp') + ' | ' + esc(l.email) + '</p>' +
+        '<div class="msg__btns">' +
+          (num ? '<a class="btn btn--small btn--sun" target="_blank" rel="noopener" href="https://wa.me/' + num + '?text=' + encodeURIComponent('Olá ' + l.nome.split(' ')[0] + '! Aqui é o Vinícius, recebi o seu pedido pelo site.') + '">Responder no WhatsApp</a>' : '') +
+          '<a class="btn btn--small" href="mailto:' + esc(l.email) + '">Enviar e-mail</a>' +
+          (novo ? '<button class="btn btn--small" data-done="' + l.id + '">Marcar como atendida</button>' : '') +
+          '<button class="btn btn--small btn--danger" data-del-lead="' + l.id + '">Excluir</button>' +
+        '</div></article>';
+    }).join('') : '<div class="empty">' + (state.filter === 'pendente' ? 'Nenhuma mensagem nova por enquanto.' : 'Nenhuma mensagem recebida ainda.') + '</div>';
+  }
+  document.querySelectorAll('.chip').forEach(function (c) {
+    c.addEventListener('click', function () {
+      state.filter = c.dataset.filter;
+      document.querySelectorAll('.chip').forEach(function (x) { x.setAttribute('aria-pressed', x === c ? 'true' : 'false'); });
+      renderLeads();
+    });
+  });
+  $('msgs-list').addEventListener('click', function (e) {
+    var done = e.target.closest('[data-done]'), del = e.target.closest('[data-del-lead]');
+    if (done) api('PUT', '/api/admin/leads/' + done.dataset.done + '/finalizar').then(function () { toast('Mensagem marcada como atendida.'); return loadLeads(); }).catch(function (x) { toast(x.message, true); });
+    if (del && confirm('Excluir esta mensagem? Não dá para desfazer.')) api('DELETE', '/api/admin/leads/' + del.dataset.delLead).then(function () { toast('Mensagem excluída.'); return loadLeads(); }).catch(function (x) { toast(x.message, true); });
+  });
+
+  /* ---------- Contatos e textos ---------- */
+  var textKeys = ['hero_food_title', 'hero_food_lead', 'hero_design_title', 'hero_design_lead', 'about_p1', 'about_p2'];
+  var priceKeys = ['preco_essencial', 'preco_delivery', 'preco_premium'];
+  function fillConfig() {
+    $('c-whatsapp').value = cfg.whatsapp; $('c-email').value = cfg.email; $('c-instagram').value = cfg.instagram; $('c-discord').value = cfg.discord; $('c-youtube').value = cfg.youtube || ''; $('c-tiktok').value = cfg.tiktok || ''; $('c-behance').value = cfg.behance || '';
+    textKeys.forEach(function (k) { $('t-' + k).value = cfg[k]; });
+    priceKeys.forEach(function (k) { $('t-' + k).value = cfg[k]; });
+    pickSobre.value = cfg.sobre_foto || '';
+    wpPreview();
+    if (typeof renderOfertas === 'function') renderOfertas();
+  }
+  function wpPreview() { var d = $('c-whatsapp').value.replace(/\D/g, ''); $('pv-whatsapp').textContent = d ? 'Link gerado: https://wa.me/' + d : ''; }
+  $('c-whatsapp').addEventListener('input', wpPreview);
+
+  function saveConfig(payload, errEl, btn, label) {
+    errEl.textContent = ''; busy(btn, true, label);
+    return api('PUT', '/api/admin/config', payload).then(function (d) { cfg = d.config; fillConfig(); toast('Salvo! O site já está atualizado.'); })
+      .catch(function (e) { errEl.textContent = e.message; })
+      .then(function () { busy(btn, false, label); });
+  }
+  $('form-contatos').addEventListener('submit', function (e) {
+    e.preventDefault();
+    saveConfig({ whatsapp: $('c-whatsapp').value, email: $('c-email').value, instagram: $('c-instagram').value, discord: $('c-discord').value, youtube: $('c-youtube').value, tiktok: $('c-tiktok').value, behance: $('c-behance').value }, $('err-contatos'), e.submitter || e.target.querySelector('button[type=submit]'), 'Salvar contatos');
+  });
+  $('form-textos').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var p = { sobre_foto: pickSobre.value };
+    textKeys.concat(priceKeys).forEach(function (k) { p[k] = $('t-' + k).value; });
+    saveConfig(p, $('err-textos'), e.target.querySelector('button[type=submit]'), 'Salvar textos e preços');
+  });
+  $('form-textos').addEventListener('click', function (e) {
+    var r = e.target.closest('[data-reset]'); if (!r) return;
+    $('t-' + r.dataset.reset).value = padrao[r.dataset.reset] || '';
+    toast('Texto original restaurado. Clique em salvar para aplicar.');
+  });
+
+  /* ---------- Janelas ---------- */
+  document.querySelectorAll('dialog').forEach(function (d) {
+    d.querySelectorAll('[data-close]').forEach(function (b) { b.addEventListener('click', function () { d.close(); }); });
+    d.addEventListener('click', function (e) { if (e.target === d) d.close(); });
+  });
+
+  /* ---------- Trabalhos de design ---------- */
+  var editTrabalho = null;
+  function loadTrabalhos() { return api('GET', '/api/admin/trabalhos').then(function (rows) { state.trabalhos = rows; renderTrabalhos(); }); }
+  function brl(n) { return 'R$ ' + Number(n).toLocaleString('pt-BR'); }
+  function toLocalInput(iso) { if (!iso) return ''; var d = new Date(iso); return isNaN(d) ? '' : new Date(d.getTime() - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 16); }
+  function fromLocalInput(v) { return v ? new Date(v).toISOString() : ''; }
+  function precoHtml(t) {
+    if (!t.preco) return '<em>Sem preço (no site aparece só a arte)</em>';
+    if (t.oferta_ativa) return '<s>' + brl(t.preco) + '</s> <strong>' + brl(t.preco_oferta) + '</strong> <span class="tag">Oferta' + (t.oferta_ate ? ' até ' + esc(fmtDate(t.oferta_ate)) : '') + '</span>';
+    if (t.preco_oferta) return brl(t.preco) + ' <span class="tag">Oferta vencida</span>';
+    return '<strong>' + brl(t.preco) + '</strong>';
+  }
+  function renderTrabalhos() {
+    var L = state.trabalhos;
+    $('trabalhos-list').innerHTML = L.length ? L.map(function (t, i) {
+      return '<article class="card item' + (t.ativo ? '' : ' item--off') + '">' +
+        '<div class="item__thumb">' + thumb(t.imagem, t.titulo) + '</div>' +
+        '<div><h3>' + esc(t.titulo) + '</h3><p>' + esc(t.tipo || 'sem tipo') + (t.ativo ? '' : ' · escondido do site') + '</p>' +
+          '<p>' + precoHtml(t) + '</p></div>' +
+        '<div class="item__btns">' +
+          '<button class="btn btn--small sq" aria-label="Subir" data-up="' + i + '"' + (i === 0 ? ' disabled' : '') + '>↑</button>' +
+          '<button class="btn btn--small sq" aria-label="Descer" data-down="' + i + '"' + (i === L.length - 1 ? ' disabled' : '') + '>↓</button>' +
+          (t.oferta_ativa ? '<button class="btn btn--small" data-unoffer="' + t.id + '">Tirar da oferta</button>' : '') +
+          '<button class="btn btn--small" data-edit="' + t.id + '">Editar</button>' +
+          '<button class="btn btn--small btn--danger" data-del="' + t.id + '">Excluir</button>' +
+        '</div></article>';
+    }).join('') : '<div class="empty">Nenhum trabalho ainda. Clique em "Adicionar trabalho".</div>';
+    if (typeof renderOfertas === 'function') renderOfertas();
+  }
+  function openTrabalho(t) {
+    editTrabalho = t || null;
+    $('dlg-trabalho-title').textContent = t ? 'Editar trabalho' : 'Adicionar trabalho';
+    $('w-titulo').value = t ? t.titulo : ''; $('w-tipo').value = t ? (t.tipo || '') : '';
+    $('w-ativo').checked = t ? !!t.ativo : true; pickTrabalho.value = t ? t.imagem : '';
+    $('w-preco').value = t && t.preco ? t.preco : ''; $('w-oferta').value = t && t.preco_oferta ? t.preco_oferta : '';
+    $('w-ate').value = t ? toLocalInput(t.oferta_ate) : '';
+    if (t) { pickTrabalho.w = t.largura; pickTrabalho.h = t.altura; }
+    $('err-trabalho').textContent = ''; $('dlg-trabalho').showModal();
+  }
+  $('add-trabalho').addEventListener('click', function () { openTrabalho(null); });
+  $('form-trabalho').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var body = { titulo: $('w-titulo').value, tipo: $('w-tipo').value, imagem: pickTrabalho.value, ativo: $('w-ativo').checked ? 1 : 0,
+      preco: $('w-preco').value, preco_oferta: $('w-oferta').value, oferta_ate: fromLocalInput($('w-ate').value),
+      largura: pickTrabalho.w || (editTrabalho && editTrabalho.largura) || 1200, altura: pickTrabalho.h || (editTrabalho && editTrabalho.altura) || 800 };
+    if (editTrabalho) body.ordem = editTrabalho.ordem;
+    var btn = $('save-trabalho'); busy(btn, true, 'Salvar'); $('err-trabalho').textContent = '';
+    api(editTrabalho ? 'PUT' : 'POST', '/api/admin/trabalhos' + (editTrabalho ? '/' + editTrabalho.id : ''), body)
+      .then(function () { $('dlg-trabalho').close(); toast(editTrabalho ? 'Trabalho atualizado.' : 'Trabalho adicionado à galeria.'); return loadTrabalhos(); })
+      .catch(function (x) { $('err-trabalho').textContent = x.message; })
+      .then(function () { busy(btn, false, 'Salvar'); });
+  });
+  function moveTrabalho(i, dir) {
+    var L = state.trabalhos.slice(), j = i + dir; if (j < 0 || j >= L.length) return;
+    var tmp = L[i]; L[i] = L[j]; L[j] = tmp;
+    var jobs = [];
+    L.forEach(function (t, idx) {
+      if (t.ordem !== idx + 1) jobs.push(api('PUT', '/api/admin/trabalhos/' + t.id, { titulo: t.titulo, tipo: t.tipo, imagem: t.imagem, largura: t.largura, altura: t.altura, ativo: t.ativo, ordem: idx + 1, preco: t.preco, preco_oferta: t.preco_oferta, oferta_ate: t.oferta_ate }));
+    });
+    Promise.all(jobs).then(loadTrabalhos).catch(function (x) { toast(x.message, true); });
+  }
+  $('trabalhos-list').addEventListener('click', function (e) {
+    var uo = e.target.closest('[data-unoffer]');
+    if (uo) { api('PUT', '/api/admin/trabalhos/' + uo.dataset.unoffer, { preco_oferta: null, oferta_ate: null }).then(function () { toast('Arte tirada da oferta.'); return loadTrabalhos(); }).catch(function (x) { toast(x.message, true); }); return; }
+    var up = e.target.closest('[data-up]'), dn = e.target.closest('[data-down]'), ed = e.target.closest('[data-edit]'), del = e.target.closest('[data-del]');
+    if (up) moveTrabalho(parseInt(up.dataset.up, 10), -1);
+    if (dn) moveTrabalho(parseInt(dn.dataset.down, 10), 1);
+    if (ed) openTrabalho(state.trabalhos.filter(function (t) { return String(t.id) === ed.dataset.edit; })[0]);
+    if (del && confirm('Excluir este trabalho da galeria?')) api('DELETE', '/api/admin/trabalhos/' + del.dataset.del).then(function () { toast('Trabalho excluído.'); return loadTrabalhos(); }).catch(function (x) { toast(x.message, true); });
+  });
+
+  /* ---------- Sites de restaurante ---------- */
+  var editSite = null;
+  function loadSites() { return api('GET', '/api/admin/projetos').then(function (rows) { state.sites = rows; renderSites(); }); }
+  function renderSites() {
+    $('sites-list').innerHTML = state.sites.length ? state.sites.map(function (s) {
+      return '<article class="card item">' +
+        '<div class="item__thumb">' + thumb(s.imagem, s.nome) + '</div>' +
+        '<div><h3>' + esc(s.nome) + (s.destaque ? ' <span class="tag">destaque</span>' : '') + '</h3><p>' + esc(s.descricao) + '</p><p class="mono" style="font-size:.8rem">' + esc(s.link || 'sem link') + '</p></div>' +
+        '<div class="item__btns"><button class="btn btn--small" data-edit="' + s.id + '">Editar</button><button class="btn btn--small btn--danger" data-del="' + s.id + '">Excluir</button></div></article>';
+    }).join('') : '<div class="empty">Nenhum site ainda. Clique em "Adicionar site".</div>';
+  }
+  function openSite(s) {
+    editSite = s || null;
+    $('dlg-site-title').textContent = s ? 'Editar site' : 'Adicionar site';
+    $('s-nome').value = s ? s.nome : ''; $('s-desc').value = s ? s.descricao : ''; $('s-link').value = s ? (s.link || '') : '';
+    pickSite.value = s ? (s.imagem || '') : ''; $('s-destaque').checked = s ? !!s.destaque : false;
+    $('s-ordem').value = s ? s.ordem : (state.sites.reduce(function (m, x) { return Math.max(m, x.ordem || 0); }, 0) + 1);
+    $('err-site').textContent = ''; $('dlg-site').showModal();
+  }
+  $('add-site').addEventListener('click', function () { openSite(null); });
+  $('form-site').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var body = { nome: $('s-nome').value, descricao: $('s-desc').value, link: $('s-link').value, imagem: pickSite.value, destaque: $('s-destaque').checked ? 1 : 0, ordem: $('s-ordem').value };
+    var btn = $('save-site'); busy(btn, true, 'Salvar'); $('err-site').textContent = '';
+    api(editSite ? 'PUT' : 'POST', '/api/admin/projetos' + (editSite ? '/' + editSite.id : ''), body)
+      .then(function () { $('dlg-site').close(); toast(editSite ? 'Site atualizado.' : 'Site adicionado.'); return loadSites(); })
+      .catch(function (x) { $('err-site').textContent = x.message; })
+      .then(function () { busy(btn, false, 'Salvar'); });
+  });
+  $('sites-list').addEventListener('click', function (e) {
+    var ed = e.target.closest('[data-edit]'), del = e.target.closest('[data-del]');
+    if (ed) openSite(state.sites.filter(function (s) { return String(s.id) === ed.dataset.edit; })[0]);
+    if (del && confirm('Excluir este site da lista?')) api('DELETE', '/api/admin/projetos/' + del.dataset.del).then(function () { toast('Site excluído.'); return loadSites(); }).catch(function (x) { toast(x.message, true); });
+  });
+
+  /* ---------- Ofertas ---------- */
+  function renderOfertas() {
+    var L = state.trabalhos, n = L.filter(function (t) { return t.oferta_ativa; }).length, com = L.filter(function (t) { return t.preco; }).length;
+    $('of-designs-status').textContent = n ? n + ' de ' + com + ' artes com preço estão em oferta agora.' : 'Nenhuma arte em oferta agora.' + (com ? '' : ' (Nenhuma arte tem preço ainda.)');
+    var ativos = [['essencial', 'Essencial'], ['delivery', 'Delivery Pro'], ['premium', 'Premium']].filter(function (x) { return cfg['oferta_' + x[0]]; });
+    var vencida = cfg.oferta_planos_ate && new Date(cfg.oferta_planos_ate) < new Date();
+    $('of-planos-status').textContent = ativos.length ? 'No ar: ' + ativos.map(function (x) { return x[1]; }).join(', ') + (cfg.oferta_planos_ate ? ' · até ' + fmtDate(cfg.oferta_planos_ate) : '') + '.' : vencida ? 'A última oferta dos planos já terminou.' : 'Nenhuma oferta nos planos agora.';
+    ['essencial', 'delivery', 'premium'].forEach(function (k) { $('op-' + k).value = cfg['oferta_' + k] || ''; });
+    $('op-ate').value = toLocalInput(cfg.oferta_planos_ate);
+  }
+  $('form-of-designs').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = $('od-apply'), err = $('err-of-designs'); err.textContent = ''; busy(btn, true, 'Aplicar em todas');
+    api('POST', '/api/admin/trabalhos/oferta', { percentual: $('od-pct').value, ate: fromLocalInput($('od-ate').value) })
+      .then(function (d) { toast(d.message); return loadTrabalhos(); })
+      .catch(function (x) { err.textContent = x.message; })
+      .then(function () { busy(btn, false, 'Aplicar em todas'); });
+  });
+  $('od-clear').addEventListener('click', function () {
+    if (!confirm('Tirar a oferta de todas as artes?')) return;
+    api('DELETE', '/api/admin/trabalhos/oferta').then(function (d) { toast(d.message); return loadTrabalhos(); }).catch(function (x) { toast(x.message, true); });
+  });
+  $('form-of-planos').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = $('op-save'), err = $('err-of-planos'); err.textContent = '';
+    var p = { oferta_planos_ate: fromLocalInput($('op-ate').value) };
+    ['essencial', 'delivery', 'premium'].forEach(function (k) { p['oferta_' + k] = $('op-' + k).value; });
+    busy(btn, true, 'Salvar ofertas dos planos');
+    api('PUT', '/api/admin/config', p).then(function (d) { cfg = d.config; fillConfig(); renderOfertas(); toast('Ofertas dos planos salvas. O site já está atualizado.'); })
+      .catch(function (x) { err.textContent = x.message; })
+      .then(function () { busy(btn, false, 'Salvar ofertas dos planos'); });
+  });
+  $('op-clear').addEventListener('click', function () {
+    api('PUT', '/api/admin/config', { oferta_essencial: '', oferta_delivery: '', oferta_premium: '', oferta_planos_ate: '' })
+      .then(function (d) { cfg = d.config; fillConfig(); renderOfertas(); toast('Ofertas dos planos removidas.'); }).catch(function (x) { toast(x.message, true); });
+  });
+
+  /* ---------- Promoções ---------- */
+  function loadPromos() { return api('GET', '/api/admin/promocoes').then(function (rows) { state.promos = rows; renderPromos(); }); }
+  function renderPromos() {
+    var now = Date.now();
+    $('promos-list').innerHTML = state.promos.length ? state.promos.map(function (p) {
+      var vencida = p.data_validade && new Date(p.data_validade).getTime() < now, on = p.ativo === 1 && !vencida;
+      return '<article class="card item" style="grid-template-columns:1fr auto">' +
+        '<div><h3><span class="tag" style="background:' + esc(/^#[0-9a-f]{3,6}$/i.test(p.cor_destaque) ? p.cor_destaque : '#ff3366') + ';color:#fff">' + (on ? 'No ar' : vencida ? 'Vencida' : 'Desativada') + '</span> ' + esc(p.titulo) + '</h3>' +
+        '<p>' + esc([p.descricao, p.preco_original && p.preco_promocional ? 'De ' + p.preco_original + ' por ' + p.preco_promocional : '', p.bonus ? '+ ' + p.bonus : ''].filter(Boolean).join(' · ')) + '</p>' +
+        '<p>Vale até ' + esc(fmtDate(p.data_validade)) + '</p></div>' +
+        '<div class="item__btns"><button class="btn btn--small" data-toggle="' + p.id + '" data-on="' + (p.ativo === 1 ? 1 : 0) + '">' + (p.ativo === 1 ? 'Desativar' : 'Ativar') + '</button><button class="btn btn--small btn--danger" data-del="' + p.id + '">Excluir</button></div></article>';
+    }).join('') : '<div class="empty">Nenhuma promoção criada.</div>';
+  }
+  $('add-promo').addEventListener('click', function () {
+    $('form-promo').reset(); $('m-cor').value = '#ff3366';
+    var d = new Date(Date.now() + 7 * 864e5 - new Date().getTimezoneOffset() * 6e4); $('m-valid').value = d.toISOString().slice(0, 16);
+    $('err-promo').textContent = ''; $('dlg-promo').showModal();
+  });
+  $('form-promo').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var body = { titulo: $('m-titulo').value, descricao: $('m-desc').value, preco_original: $('m-orig').value, preco_promocional: $('m-promo').value, bonus: $('m-bonus').value,
+      data_validade: new Date($('m-valid').value).toISOString(), cor_destaque: $('m-cor').value };
+    var btn = $('save-promo'); busy(btn, true, 'Criar promoção'); $('err-promo').textContent = '';
+    api('POST', '/api/admin/promocoes', body)
+      .then(function () { $('dlg-promo').close(); toast('Promoção criada e no ar.'); return loadPromos(); })
+      .catch(function (x) { $('err-promo').textContent = x.message; })
+      .then(function () { busy(btn, false, 'Criar promoção'); });
+  });
+  $('promos-list').addEventListener('click', function (e) {
+    var tg = e.target.closest('[data-toggle]'), del = e.target.closest('[data-del]');
+    if (tg) api('PUT', '/api/admin/promocoes/' + tg.dataset.toggle, { ativo: tg.dataset.on === '1' ? 0 : 1 }).then(function () { return loadPromos(); }).catch(function (x) { toast(x.message, true); });
+    if (del && confirm('Excluir esta promoção?')) api('DELETE', '/api/admin/promocoes/' + del.dataset.del).then(function () { toast('Promoção excluída.'); return loadPromos(); }).catch(function (x) { toast(x.message, true); });
+  });
+
+  if (token) showApp();
+})();
+</script>
+</body>
+</html>
